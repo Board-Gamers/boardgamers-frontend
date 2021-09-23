@@ -1,15 +1,22 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+    state: {
+        boardgameinfo: {},
+    },
+    mutations: {
+        GET_BOARDGAME_INFO(state, data) {
+            state.boardgameinfo = data;
+        },
+    },
+    getters: {
+        getBoardgameinfo: (state) => {
+            return state.boardgameinfo;
+        },
+    },
+    actions: {},
+    modules: {},
+});

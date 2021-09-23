@@ -1,19 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import Main from "../views/Main.vue";
 import QnA from "../views/QnA.vue";
 import Login from "@/views/user/Login.vue";
 import Signup from "@/views/user/SignUp.vue";
 import BoardGameDetail from "@/views/boardgame/BoardGameDetail.vue";
+import BoardGameSearch from "@/views/boardgame/BoardGameSearch.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: "/",
-        name: "Home",
-        component: Home,
+        name: "Main",
+        component: Main,
     },
     {
         path: "/login",
@@ -31,14 +31,14 @@ const routes = [
         component: QnA,
     },
     {
-        path: "/main",
-        name: "Main",
-        component: Main,
-    },
-    {
         path: "/board/:id",
         name: "BoardGameDetail",
         component: BoardGameDetail,
+    },
+    {
+        path: "/search",
+        name: "BoardGameSearch",
+        component: BoardGameSearch,
     },
 ];
 

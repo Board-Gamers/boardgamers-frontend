@@ -13,13 +13,17 @@
                 <div class="col-sm-10">
                     <div class="row mb-5">
                         <div class="col-md-5">
-                            <img class="w-100" :src="img" alt="" />
+                            <img class="w-100" :src="info.image" alt="" />
                         </div>
                         <div class="col-md-7 text-start">
-                            <div class=" fs-3 fw-500">{{ name }}&nbsp;☆{{ rate }}</div>
-                            <div class=" fs-5 fc-36">{{ description }}</div>
-                            <div class=" fs-5 fw-500"><span class="fc-80">적정 인원&nbsp;&nbsp;</span>{{ minplayer }}~{{ maxplayer }}명</div>
-                            <div class=" fs-5 fw-500"><span class="fc-80">플레이시간&nbsp;</span>{{ playtime }}분</div>
+                            <div class=" fs-3 fw-500">
+                                <span v-if="info.nameKor">{{ info.nameKor }}</span
+                                ><span v-else>{{ info.name }}</span
+                                >&nbsp;☆{{ info.averageRate }}
+                            </div>
+                            <!-- <div class=" fs-5 fc-36">{{ info.description }}</div> -->
+                            <div class=" fs-5 fw-500"><span class="fc-80">적정 인원&nbsp;&nbsp;</span>{{ info.minPlayers }}~{{ info.maxPlayers }}명</div>
+                            <div class=" fs-5 fw-500"><span class="fc-80">플레이시간&nbsp;</span>{{ info.minPlayTime }}분</div>
                         </div>
                     </div>
                     <div class="row">
@@ -70,47 +74,43 @@
                                     <div class="col">
                                         <p class="fs-0"><i class="far fa-user"></i></p>
                                         <p class="fs-4 fc-80">게임 인원</p>
-                                        <p class="fs-5">{{ minplayer }}~{{ maxplayer }}명</p>
+                                        <p class="fs-5">{{ info.minPlayers }}~{{ info.maxPlayers }}명</p>
                                     </div>
                                     <div class="col">
                                         <p class="fs-0"><i class="fas fa-sort-numeric-up"></i></p>
                                         <p class="fs-4 fc-80">게임 연령</p>
-                                        <p class="fs-5">{{ minage }}세 이상</p>
+                                        <p class="fs-5">{{ info.minAge }}세 이상</p>
                                     </div>
                                     <div class="col">
                                         <p class="fs-0"><i class="far fa-clock"></i></p>
                                         <p class="fs-4 fc-80">게임 시간</p>
-                                        <p class="fs-5">{{ playtime }}분</p>
+                                        <p class="fs-5">{{ info.minPlayTime }}분</p>
                                     </div>
                                 </div>
                                 <div class="row text-start">
                                     <div class="d-flex">
                                         <p class="fc-80">description:&nbsp;</p>
-                                        <p class="fc-36">In Pandemic, several virulent diseases have broken out simultaneously all over the world! The player</p>
+                                        <p class="fc-36" v-html="info.description"></p>
                                     </div>
                                     <div class="d-flex">
                                         <p class="fc-80">category:&nbsp;</p>
-                                        <p class="fc-36">'Medical'</p>
+                                        <p class="fc-36">{{ info.category }}</p>
                                     </div>
                                     <div class="d-flex">
                                         <p class="fc-80">playtype:&nbsp;</p>
-                                        <p class="fc-36">['Action Points', 'Cooperative Game', 'Hand Management', 'Point to Point Movement', 'Set Collection'...</p>
+                                        <p class="fc-36">{{ info.playType }}</p>
                                     </div>
                                     <div class="d-flex">
                                         <p class="fc-80">series:&nbsp;</p>
-                                        <p class="fc-36">['Pandemic Legacy: Season 0', 'Pandemic Legacy: Season 1', 'Pandemic Legacy: Season 2', 'Pandemic: F..</p>
+                                        <p class="fc-36">{{ info.series }}</p>
                                     </div>
                                     <div class="d-flex">
-                                        <p class="fc-80">designer:&nbsp;</p>
-                                        <p class="fc-36">['Matt Leacock']</p>
+                                        <p class="fc-80">yearPublished:&nbsp;</p>
+                                        <p class="fc-36">{{ info.yearPublished }}</p>
                                     </div>
                                     <div class="d-flex">
-                                        <p class="fc-80">artist:&nbsp;</p>
-                                        <p class="fc-36">['Josh Cappel', 'Christian Hanisch', 'Régis Moulun', 'Chris Quilliams', 'Tom Thiel']</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="fc-80">publisher:&nbsp;</p>
-                                        <p class="fc-36">['Z-Man Games, Inc.', '(Unknown)', 'Albi', 'Asmodee', 'Asmodee Italia', 'Asterion Press', 'Brain Gam...</p>
+                                        <p class="fc-80">rank:&nbsp;</p>
+                                        <p class="fc-36">{{ info.rank }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -185,6 +185,7 @@
 // @ is an alias to /src
 import Navigation from "@/components/boardgame/Navigation.vue";
 import Tap from "@/components/boardgame/Tap.vue";
+import BoardgameApi from "@/apis/BoardgameApi.js";
 import "@/assets/css/font.css";
 import "@/assets/css/border.css";
 
@@ -195,19 +196,17 @@ export default {
         Tap,
     },
     created() {
-        console.log(this.$route.params.id);
+        //console.log(this.$route.params.id);
+        let id = this.$route.params.id;
+        BoardgameApi.requestGameInfo(id).then((res) => {
+            this.info = res.data.data;
+        });
+        // console.log(this.$store.getters.getBoardgameinfo);
     },
     computed: {},
     data() {
         return {
-            img: "https://picsum.photos/500/300/?random",
-            name: "스플랜더",
-            rate: 10.0,
-            description: "용을 물리치고 용사가 되어 보물을 얻는 게임",
-            minplayer: 2,
-            maxplayer: 4,
-            playtime: 15,
-            minage: 8,
+            info: {},
             aba: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         };
     },

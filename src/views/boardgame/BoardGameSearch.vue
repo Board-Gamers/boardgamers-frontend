@@ -1,5 +1,5 @@
 <template>
-    <div class="home text-center">
+    <div class="text-center">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
@@ -12,8 +12,8 @@
                 </div>
                 <div class="col-sm-10">
                     <div class="row row-cols-2 row-cols-sm-3">
-                        <div class="col" v-for="ele in elements" v-bind:key="ele" v-on:click="goDetail(ele)">
-                            <Element img="https://picsum.photos/500/300/?random" name="드래곤마스터" />
+                        <div class="col" v-for="ele in elements" v-bind:key="ele" v-on:click="goDetail(ele.id)">
+                            <Element :object="ele" />
                         </div>
                     </div>
                 </div>
@@ -23,26 +23,32 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import TestApi from "@/apis/TestApi.js";
 import Element from "@/components/boardgame/GameElement.vue";
 import Navigation from "@/components/boardgame/Navigation.vue";
 import Tap from "@/components/boardgame/Tap.vue";
+import BoardgameApi from "@/apis/BoardgameApi.js";
 
 export default {
-    name: "Home",
+    name: "BoardGameSearch",
     components: {
         Element,
         Navigation,
         Tap,
     },
     created() {
-        console.log("test");
-        TestApi.requestTest();
+        let data = {
+            keyword: "",
+            category: "",
+            page: 1,
+        };
+        BoardgameApi.requestGameSearch(data).then((res) => {
+            this.elements = res.data.data.games;
+            //console.log(res.data.data.games);
+        });
     },
     data() {
         return {
-            elements: [100, 200, 300, 400, 500, 600, 700],
+            elements: [2232, 2235, 2236, 2238, 2240, 2248, 2249],
         };
     },
     methods: {
