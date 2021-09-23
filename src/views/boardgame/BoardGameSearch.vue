@@ -12,11 +12,30 @@
                 </div>
                 <div class="col-sm-10">
                     <div class="row row-cols-2 row-cols-sm-3">
-                        <div class="col" v-for="ele in elements" v-bind:key="ele" v-on:click="goDetail(ele.id)">
+                        <div class="col" v-for="ele in elements" v-bind:key="ele.id" v-on:click="goDetail(ele.id)">
                             <Element :object="ele" />
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <button class="page-link" v-on:click="prenex(0)" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </button>
+                        </li>
+                        <li class="page-item" v-for="page in pages" v-bind:key="page">
+                            <button class="page-link" v-on:click="paging(page)">{{ page }}</button>
+                        </li>
+                        <li class="page-item">
+                            <button class="page-link" v-on:click="prenex(1)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -36,24 +55,50 @@ export default {
         Tap,
     },
     created() {
-        let data = {
-            keyword: "",
-            category: "",
-            page: 1,
-        };
-        BoardgameApi.requestGameSearch(data).then((res) => {
-            this.elements = res.data.data.games;
-            //console.log(res.data.data.games);
-        });
+        this.fetchData();
     },
     data() {
         return {
-            elements: [2232, 2235, 2236, 2238, 2240, 2248, 2249],
+            elements: [],
+            totalPageItemCnt: 0,
+            totalPage: 0,
+            nowPage: 0,
+            nowPageSize: 0,
+            pages: [1, 2, 3, 4, 5],
         };
     },
+    watch: {
+        // 라우트가 변경되면 메소드를 다시 호출됩니다.
+        $route: "fetchData",
+    },
     methods: {
+        fetchData() {
+            let data = {
+                keyword: this.$route.query.keyword ? this.$route.query.keyword : "",
+                category: this.$route.query.category ? this.$route.query.category : "",
+                page: this.$route.query.page ? this.$route.query.page : 1,
+            };
+            BoardgameApi.requestGameSearch(data).then((res) => {
+                this.elements = res.data.data.games;
+                this.totalPageItemCnt = res.data.data.totalPageItemCnt;
+                this.totalPage = res.data.data.totalPage;
+                this.nowPage = res.data.data.nowPage;
+                this.nowPageSize = res.data.data.nowPageSize;
+            });
+        },
         goDetail(id) {
             this.$router.push({ name: "BoardGameDetail", params: { id: id } });
+        },
+        paging(page) {
+            this.$router.push({ path: "search", query: { page: page } });
+        },
+        prenex(key) {
+            if (key == 1) {
+                this.pages = this.pages.map((x) => x + 5);
+            }
+            if (key == 0) {
+                if (this.pages[0] != 1) this.pages = this.pages.map((x) => x - 5);
+            }
         },
     },
 };
