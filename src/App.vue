@@ -1,24 +1,24 @@
 <template>
     <div id="app">
-        <div id="nav">
+        <!-- <div id="nav">
             <router-link to="/main">Main</router-link> | 
-            <router-link to="/">Home</router-link> | 
+            <router-link to="/">Main</router-link> | 
             <router-link to="/login">Login</router-link>
-        </div>
+        </div> -->
         <router-view />
     </div>
 </template>
 
 <style>
 @font-face {
-    font-family: 'Noto Sans CJK KR';
-    src: url('./fonts/NotoSansCJKkr-Regular.otf') format('opentype');
+    font-family: "Noto Sans CJK KR";
+    src: url("./fonts/NotoSansCJKkr-Regular.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
 }
 
 #app {
-    font-family: 'Noto Sans CJK KR', sans-serif;
+    font-family: "Noto Sans CJK KR", sans-serif;
     /*-webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;*/
 }
