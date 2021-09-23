@@ -35,9 +35,7 @@ h5, p {
 
 .main-banner {
   width: 100%;
-  height: 65vw;
-  max-height: 320px;
-  padding: 5% 10% 3%;
+  padding: 3% 20% 2%;
   position: relative;
   background-color: rgba(0, 0, 0, 0.5);
   background-image: url('../../assets/main/1.png');
@@ -49,6 +47,7 @@ h5, p {
   justify-content: space-between;
   align-items: center;
   color: white;
+  gap: 1.5rem;
   font-size: 14px;
 }
 
@@ -61,7 +60,7 @@ h5, p {
 }
 
 .banner-info img {
-  max-width: 35px;
+  max-width: 30px;
   width: 7vw;
   margin-bottom: 0.5em;
 }

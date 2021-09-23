@@ -1,5 +1,5 @@
 <template>
-  <div class="main container">
+  <div class="main">
 
     <Navigation class="w-100"/>
     
@@ -115,46 +115,11 @@ export default {
 
 <style scoped>
 .main {
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   max-width: 1000px;
-}
-
-.main .card-section .card > div:first-child {
-  position: relative;
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
-  overflow: hidden;
-  color: white;
-  height: 300px;
-}
-
-.main .card-section .card > div:first-child div {
-  height: 100%;
-  z-index: 1;
-  padding: 10px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.main .card-img-top {
-  width: 50%;
-}
-
-.main .card-bg-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  filter: blur(5px) brightness(60%);
-}
-
-.main .card-body {
-  text-align: start;
-  padding: 20px 8%;
 }
 </style>

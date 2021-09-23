@@ -29,10 +29,10 @@
       </div>
     </div>
 
-    <button :disabled="index === 0" @click="prevBtn">prev</button>
-    <button :disabled="index === 3" @click="nextBtn">next</button>
 
     <div class="card-body">
+      <button :disabled="index === 0" @click="prevBtn">prev</button>
+      <button :disabled="index === 3" @click="nextBtn">next</button>
       <p class="card-title"><span>1</span>Card title</p>
       <p class="card-title"><span>2</span>Card title</p>
       <p class="card-title"><span>3</span>Card title</p>
@@ -76,6 +76,7 @@ export default {
 </script>
 
 <style scoped>
+/* card bg img를 head-list의 css background로 넣고 card-head에 backdrop-filter 적용하기 */
 h5, h6 {
   margin: 0;
   position: absolute;
@@ -84,7 +85,7 @@ h5, h6 {
 }
 
 .carousel-card {
-  width: 25%;
+  width: 24%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -105,18 +106,15 @@ h5, h6 {
 .card-head {
   position: absolute;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   width: 100%;
   height: 100%;
-  transition: 0.5s;
 }
 
 .card-head > h6 {
   bottom: 10%;
-  transition: 0.5s;
   opacity: 0;
 }
 
@@ -158,9 +156,10 @@ h5, h6 {
   margin-right: 10px;
   font-size: 1.2em;
 }
+
 @media screen and (max-width: 575px) {
   .carousel-card {
-    width: 50%;
+    width: 49%;
   }
 }
 
