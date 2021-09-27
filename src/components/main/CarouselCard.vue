@@ -5,26 +5,26 @@
 
     <div class="head-list">
       <div class="card-head">
-        <img :src="require('@/assets/main/1.png')" class="card-bg-img" alt="1">
-        <img :src="require('@/assets/main/1.png')" class="card-head-img" alt="1">
+        <img src="@/assets/main/1.png" class="card-bg-img" alt="1">
+        <img src="@/assets/main/1.png" class="card-head-img" alt="1">
         <h6>스플랜더</h6>
       </div>
 
       <div class="card-head">
-        <img :src="require('@/assets/main/2.png')" alt="2" class="card-bg-img">
-        <img :src="require('@/assets/main/2.png')" class="card-head-img" alt="2">
+        <img src="@/assets/main/2.png" alt="2" class="card-bg-img">
+        <img src="@/assets/main/2.png" class="card-head-img" alt="2">
         <h6>할리갈리</h6>
       </div>
 
       <div class="card-head">
-        <img :src="require('@/assets/main/3.png')" alt="3" class="card-bg-img">
-        <img :src="require('@/assets/main/3.png')" class="card-head-img" alt="3">
+        <img src="@/assets/main/3.png" alt="3" class="card-bg-img">
+        <img src="@/assets/main/3.png" class="card-head-img" alt="3">
         <h6>5초준다</h6>
       </div>
 
       <div class="card-head">
-        <img :src="require('@/assets/main/4.png')" alt="4" class="card-bg-img">
-        <img :src="require('@/assets/main/4.png')" class="card-head-img" alt="4">
+        <img src="@/assets/main/4.png" alt="4" class="card-bg-img">
+        <img src="@/assets/main/4.png" class="card-head-img" alt="4">
         <h6>카탄</h6>
       </div>
     </div>
@@ -69,7 +69,6 @@ export default {
     }
   },
   mounted: function () {
-    // console.log(this.$el.getBoundingClientRect())
     const first_card = this.$el.querySelector('.card-head')
     first_card.classList.add('active')
   }

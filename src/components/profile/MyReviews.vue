@@ -12,7 +12,7 @@
     </div>
 
     <div>
-      <ReviewItems v-for="n in 5" :key="n"/>
+      <ReviewItems v-for="n in 10" :key="n"/>
     </div>
 
     <br>
@@ -34,7 +34,6 @@ export default {
 
 <style scoped>
 .my-reviews {
-  max-width: 1000px;
   text-align: start;
   padding: 0 12px;
 }

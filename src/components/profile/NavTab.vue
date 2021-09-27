@@ -7,10 +7,11 @@
         <p>yeong-a@naver.com</p>
       </div>
       <ul>
-        <li @click="selectTab"><i class="far fa-comment-alt"></i> 리뷰</li>
-        <li @click="selectTab"><i class="fas fa-medal"></i> 달성</li>
-        <li @click="selectTab"><i class="far fa-folder-open"></i> 즐겨찾기</li>
-        <li @click="selectTab"><i class="fas fa-cog"></i> 설정</li>
+        <li @click="selectReview"><i class="far fa-comment-alt"></i> 리뷰</li>
+        <li @click="selectMission"><i class="fas fa-medal"></i> 달성</li>
+        <li @click="selectGame"><i class="far fa-folder-open"></i> 즐겨찾기</li>
+        <!-- <li @click="selectTab"><i class="fas fa-cog"></i> 설정</li> -->
+        <li class="disabled"><i class="fas fa-cog"></i> 설정</li>
       </ul>
     </div>
   </div>
@@ -27,10 +28,22 @@ export default {
         selectedTab.classList.remove('active')
         tab.classList.add('active')
       }
-    }
+    },
+    selectReview: function (e) {
+      this.selectTab(e)
+      this.$emit('select', 'review')
+    },
+    selectMission: function (e) {
+      this.selectTab(e)
+      this.$emit('select', 'mission')
+    },
+    selectGame: function (e) {
+      this.selectTab(e)
+      this.$emit('select', 'game')
+    },
   },
   mounted: function () {
-    const x = document.querySelector('li')
+    const x = this.$el.querySelector('li')
     x.classList.add('active')
   }
 }
@@ -54,6 +67,7 @@ p {
   text-align: start;
   gap: 36px;
   background: #fff;
+  z-index: 1;
 }
 
 .navtab img {
@@ -90,6 +104,16 @@ ul li:hover {
 ul li.active {
   border-bottom: 3px solid #9CB8FF;
   background: #fff;
+}
+
+ul li.disabled {
+  cursor: default;
+  color: #C4C4C4;
+}
+
+ul li.disabled:hover {
+  background: #fff;
+  border-bottom: unset;
 }
 
 @media screen and (max-width: 767px){
