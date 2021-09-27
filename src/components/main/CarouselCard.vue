@@ -69,6 +69,7 @@ export default {
     }
   },
   mounted: function () {
+    // console.log(this.$el.getBoundingClientRect())
     const first_card = this.$el.querySelector('.card-head')
     first_card.classList.add('active')
   }

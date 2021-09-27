@@ -22,7 +22,7 @@ export default {
 <style scoped>
 .table-body {
   border-bottom: 2px solid #dee2e6;
-  padding: 1em 0;
+  padding: 13px 0;
   text-align: center;
 }
 
