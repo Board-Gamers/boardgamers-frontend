@@ -15,15 +15,17 @@
                         <div class="col-md-5">
                             <img class="w-100" :src="info.image" alt="" />
                         </div>
-                        <div class="col-md-7 text-start">
-                            <div class=" fs-3 fw-500">
+                        <div class="col-md-7 text-start py-1">
+                            <div class=" fs-3 fw-500 mb-1">
                                 <span v-if="info.nameKor">{{ info.nameKor }}</span
                                 ><span v-else>{{ info.name }}</span
-                                >&nbsp;☆{{ info.averageRate }}
+                                >&nbsp;<span class="text-danger"><i class="fas fa-star"></i></span><span class="fs-4 fw-bold" v-if="info.averageRate">{{ info.averageRate.toFixed(1) }}</span>
                             </div>
                             <!-- <div class=" fs-5 fc-36">{{ info.description }}</div> -->
-                            <div class=" fs-5 fw-500"><span class="fc-80">적정 인원&nbsp;&nbsp;</span>{{ info.minPlayers }}~{{ info.maxPlayers }}명</div>
-                            <div class=" fs-5 fw-500"><span class="fc-80">플레이시간&nbsp;</span>{{ info.minPlayTime }}분</div>
+                            <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 인원&nbsp;&nbsp;</span>{{ info.minPlayers }}~{{ info.maxPlayers }}명</div>
+                            <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 시간&nbsp;&nbsp;</span>{{ info.minPlayTime }}분</div>
+                            <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 연령&nbsp;&nbsp;</span>{{ info.minAge }}세 이상</div>
+                            <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 순위&nbsp;&nbsp;</span>{{ info.rank }}위</div>
                         </div>
                     </div>
                     <div class="row">
@@ -93,24 +95,25 @@
                                         <p class="fc-36" v-html="info.description"></p>
                                     </div>
                                     <div class="d-flex">
-                                        <p class="fc-80">category:&nbsp;</p>
+                                        <p class="fc-80">category:&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         <p class="fc-36">{{ info.category }}</p>
                                     </div>
                                     <div class="d-flex">
-                                        <p class="fc-80">playtype:&nbsp;</p>
+                                        <p class="fc-80">playtype:&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         <p class="fc-36">{{ info.playType }}</p>
                                     </div>
+
                                     <div class="d-flex">
-                                        <p class="fc-80">series:&nbsp;</p>
-                                        <p class="fc-36">{{ info.series }}</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="fc-80">yearPublished:&nbsp;</p>
+                                        <p class="fc-80">published:&nbsp;&nbsp;</p>
                                         <p class="fc-36">{{ info.yearPublished }}</p>
                                     </div>
                                     <div class="d-flex">
-                                        <p class="fc-80">rank:&nbsp;</p>
+                                        <p class="fc-80">ranking:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                                         <p class="fc-36">{{ info.rank }}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p class="fc-80">series:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                        <p class="fc-36">{{ info.series }}</p>
                                     </div>
                                 </div>
                             </div>

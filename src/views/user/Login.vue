@@ -27,6 +27,7 @@ import Bgi from "@/components/user/BackgroundImage.vue";
 import Logo from "@/components/user/Logo.vue";
 import Button from "@/components/user/Button.vue";
 import Input from "@/components/user/InputBox.vue";
+import UserApi from "@/apis/UserApi.js";
 
 export default {
     name: "Login",
@@ -44,7 +45,15 @@ export default {
             this.password = value;
         },
         login() {
-            alert(`email: ${this.email}, password:${this.password}`);
+            let data = {
+                loginId: this.email,
+                password: this.password,
+            };
+
+            UserApi.requestLogin(data, (nick) => {
+                alert(nick + "님 반갑습니다");
+                this.$router.push({ name: "Main" });
+            });
         },
     },
     data() {

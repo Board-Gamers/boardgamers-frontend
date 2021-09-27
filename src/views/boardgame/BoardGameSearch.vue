@@ -20,7 +20,7 @@
             </div>
             <div>
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination">
+                    <ul class="pagination justify-content-center">
                         <li class="page-item">
                             <button class="page-link" v-on:click="prenex(0)" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
