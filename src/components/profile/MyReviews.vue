@@ -27,7 +27,12 @@ import ReviewItems from "./ReviewItems.vue";
 export default {
   name: "MyReviews",
   components: {
-    ReviewItems
+    ReviewItems,
+  },
+  data: function () {
+    return {
+      rate: 5
+    }
   }
 }
 </script>
