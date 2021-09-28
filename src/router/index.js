@@ -5,6 +5,7 @@ import QnA from "@/views/QnA.vue";
 import Profile from "@/views/Profile.vue";
 import Login from "@/views/user/Login.vue";
 import Signup from "@/views/user/SignUp.vue";
+import Rating from "@/views/user/InitialRating.vue";
 import BoardGameDetail from "@/views/boardgame/BoardGameDetail.vue";
 import BoardGameSearch from "@/views/boardgame/BoardGameSearch.vue";
 
@@ -46,6 +47,11 @@ const routes = [
     name: "BoardGameSearch",
     component: BoardGameSearch,
   },
+    {
+        path: "/rating",
+        name: "Rating",
+        component: Rating,
+    },
 ];
 
 const router = new VueRouter({

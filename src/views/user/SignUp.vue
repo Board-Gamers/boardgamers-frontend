@@ -65,6 +65,11 @@ export default {
                 nickname: this.nickname,
                 password: this.password,
             };
+
+            if (!data.id || !data.nickname || !data.password) return;
+
+            if (data.password !== this.passwordConfirm) alert("비밀번호가 다릅니다!");
+
             UserApi.requestSignUp(data);
             // alert(`
             //     email: ${this.email},
