@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import MissionItems from "@/components/profile/MissionItems.vue";
+import MissionItems from "./MissionItems.vue";
 
 export default {
   name: "MyMission",

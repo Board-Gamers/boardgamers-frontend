@@ -13,6 +13,8 @@
       <MyGames v-else-if="selectedTab === 'game'"/>
     </div>
 
+    <!-- <Settings /> -->
+
     <br>
 
   </div>
@@ -21,9 +23,10 @@
 <script>
 import Navigation from "@/components/boardgame/Navigation.vue";
 import NavTab from "@/components/profile/NavTab.vue";
-import MyReviews from "@/components/profile/MyReviews.vue";
-import MyMission from "@/components/profile/MyMission.vue";
-import MyGames from "@/components/profile/MyGames.vue";
+import MyReviews from "@/components/profile/reviews/MyReviews.vue";
+import MyMission from "@/components/profile/missions/MyMission.vue";
+import MyGames from "@/components/profile/games/MyGames.vue";
+import Settings from "@/components/profile/settings/Settings.vue";
 
 export default {
   name: "Profile",
@@ -33,6 +36,7 @@ export default {
     MyReviews,
     MyMission,
     MyGames,
+    Settings,
   },
   data: function () {
     return {
