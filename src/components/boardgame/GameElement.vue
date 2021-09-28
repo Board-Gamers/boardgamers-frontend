@@ -2,7 +2,7 @@
     <div class="p-3">
         <div class="game-img">
             <div class="inner">
-                <img :src="object.thumbnail" alt="" class="w-100 h-100" />
+                <img :src="object.image" alt="" class="w-100 h-100" />
             </div>
         </div>
         <div class="game-name pt-2 text-start">
