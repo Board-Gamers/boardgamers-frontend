@@ -36,12 +36,10 @@ export default {
 
 <style scoped>
 .main {
-  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 1000px;
 }
 
 .card-list {

@@ -21,28 +21,29 @@ export default {
   display: flex;
   flex-direction: column;
   text-align: center;
+  position: relative;
 }
 
 .game-img {
-  height: 100%;
-  margin: auto;
+  height: auto;
   display: flex;
   justify-content: center;
-  align-items: center;
-  transform-style: preserve-3d;
+  /* align-items: center; */
   transform: perspective(500px);
+  transform-style: preserve-3d;
 }
 
 .game-img img:nth-child(1) {
   width: 15%;
-  height: 100%;
   transform: rotateY(-60deg);
   transform-origin: right;
+  filter: brightness(70%);
 }
 
 .game-img img:nth-child(2) {
   width: 55%;
-  transform: rotateY(30deg);
+  height: auto;
+  transform: rotateY(25deg);
   transform-origin: left;
 }
 

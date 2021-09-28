@@ -11,9 +11,8 @@
       <MyReviews v-if="selectedTab === 'review'"/>
       <MyMission v-else-if="selectedTab === 'mission'"/>
       <MyGames v-else-if="selectedTab === 'game'"/>
+      <Settings v-else-if="selectedTab === 'setting'"/>
     </div>
-
-    <!-- <Settings /> -->
 
     <br>
 
@@ -53,12 +52,10 @@ export default {
 
 <style scoped>
 .profile {
-  margin: auto;
   position: relative;
   display: flex;
   flex-direction: column;
   text-align: center;
-  max-width: 1000px;
 }
 
 .tab > div {

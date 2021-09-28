@@ -10,8 +10,8 @@
         <li @click="selectReview"><i class="far fa-comment-alt"></i> 리뷰</li>
         <li @click="selectMission"><i class="fas fa-medal"></i> 달성</li>
         <li @click="selectGame"><i class="far fa-folder-open"></i> 즐겨찾기</li>
-        <!-- <li @click="selectTab"><i class="fas fa-cog"></i> 설정</li> -->
-        <li class="disabled"><i class="fas fa-cog"></i> 설정</li>
+        <li @click="selectSetting"><i class="fas fa-cog"></i> 설정</li>
+        <!-- <li class="disabled"><i class="fas fa-cog"></i> 설정</li> -->
       </ul>
     </div>
   </div>
@@ -40,6 +40,10 @@ export default {
     selectGame: function (e) {
       this.selectTab(e)
       this.$emit('select', 'game')
+    },
+    selectSetting: function (e) {
+      this.selectTab(e)
+      this.$emit('select', 'setting')
     },
   },
   mounted: function () {

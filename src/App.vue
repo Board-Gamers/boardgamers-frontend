@@ -5,7 +5,7 @@
             <router-link to="/">Main</router-link> | 
             <router-link to="/login">Login</router-link>
         </div> -->
-        <router-view />
+        <router-view/>
     </div>
 </template>
 
@@ -21,6 +21,11 @@
     font-family: "Noto Sans CJK KR", sans-serif;
     /*-webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;*/
+}
+
+#app > div {
+    max-width: 1000px;
+    margin: auto;
 }
 
 #nav {
