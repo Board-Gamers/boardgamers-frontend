@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <span>
         <span class="star1">
             <span v-if="rating < 1"><i class="far fa-star"></i></span>
             <span v-if="rating >= 1 && rating < 2"><i class="fas fa-star-half-alt"></i></span>
@@ -25,7 +25,7 @@
             <span v-if="rating >= 9 && rating < 10"><i class="fas fa-star-half-alt"></i></span>
             <span v-if="rating >= 10"><i class="fas fa-star"></i></span>
         </span>
-    </div>
+    </span>
 </template>
 
 <script>
