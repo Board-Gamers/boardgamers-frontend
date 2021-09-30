@@ -1,5 +1,5 @@
 <template>
-  <div class="qna container">
+  <div class="qna">
     <Navigation />
 
     <div class="qna-description">
@@ -10,21 +10,24 @@
       <button class="btn btn-primary write-btn">글 쓰기</button>
     </div>
 
-    <div class="row table-header">
-      <div class="col-2 col-sm-1">번호</div>
-      <div class="col">제목</div>
-      <div class="col-2">작성자</div>
-      <div class="col-2">작성일</div>
-      <div class="col-2 col-md-1">조회수</div>
+    <div class="table-header">
+      <div>번호</div>
+      <div>제목</div>
+      <div>작성자</div>
+      <div>작성일</div>
+      <div>조회수</div>
     </div>
 
-    <QnAItem v-for="(data, idx) in qnas" :key="idx" :data="data" />
+    <div v-if="qna.length">
+      <QnAItem v-for="(data, idx) in qna" :key="idx" :data="data" />
+    </div>
   </div>
 </template>
 
 <script>
 import Navigation from "@/components/boardgame/Navigation.vue";
 import QnAItem from "@/components/qna/QnAItem.vue";
+import QnaApi from "@/apis/QnaApi.js";
 
 export default {
   name: "QnA",
@@ -34,26 +37,18 @@ export default {
   },
   data: function() {
     return {
-      qnas: [
-        {
-          id: 10,
-          title: "보드게임이 하고싶은데 돈이 없는 초등학생입니다.",
-          writer_name: "초딩입니다",
-          write_at: "21.08.05",
-          view_cnt: 1089,
-          is_reply: false,
-        },
-        {
-          id: 9,
-          title: "모두의 마블 추가해주세요.",
-          writer_name: "중딩입니다",
-          write_at: "21.08.03",
-          view_cnt: 56,
-          is_reply: true,
-        },
-      ],
+      qna: []
     };
   },
+  methods: {
+    getQnaList: async function () {
+      const res = await QnaApi.requestQnaList()
+      this.qna = res.questions
+    }
+  },
+  mounted: async function () {
+    this.getQnaList()
+  }
 };
 </script>
 
@@ -70,14 +65,22 @@ p {
 .qna {
   display: flex;
   flex-direction: column;
-  text-align: center;
   font-size: 14px;
+  padding: 0 12px;
 }
 
 .table-header {
   border-top: 2px solid #dee2e6;
   border-bottom: 2px solid #dee2e6;
   padding: 1em 0;
+  display: grid;
+  grid-template-columns: 70px auto 140px  100px 80px;
+  gap: 1vw;
+  text-align: center;
+}
+
+.table-header > div {
+  padding: 0 1vw;
 }
 
 .write-btn {
@@ -98,6 +101,7 @@ p {
 @media screen and (max-width: 767px) {
   .table-header {
     font-size: 12px;
+    grid-template-columns: 70px auto 100px 80px 70px;
   }
 }
 
@@ -114,6 +118,7 @@ p {
 
   .table-header {
     font-size: 10px;
+    grid-template-columns: 40px auto 60px 50px 40px;
   }
 }
 </style>

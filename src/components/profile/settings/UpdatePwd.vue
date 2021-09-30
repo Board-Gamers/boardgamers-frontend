@@ -2,8 +2,6 @@
   <div class="update-pwd">
     <h1>비밀번호 변경</h1>
 
-    <br>
-
     <div class="nickname">
       <label for="password">현재 비밀번호</label>
       <input type="password" id="password">
@@ -48,6 +46,18 @@ label {
 
 input {
   width: 100%;
+  max-width: 440px;
+  padding: 5px 12px;
+  line-height: 20px;
+  font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.05);
+  outline: none;
+}
+
+input:focus {
+  background: #fff;
 }
 
 </style>

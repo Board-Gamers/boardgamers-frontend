@@ -51,6 +51,17 @@ export default {
 </script>
 
 <style scoped>
+@keyframes show {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
 .profile {
   position: relative;
   display: flex;
@@ -62,14 +73,9 @@ export default {
   animation: show 0.5s 1 ease-out;
 }
 
-@keyframes show {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0px);
+@media screen and (max-width: 767px) { 
+  .tab > div {
+    margin: 0 3vw;
   }
 }
 </style>
