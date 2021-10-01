@@ -6,21 +6,21 @@
                 <div class="fs-4 text-danger"><StarRate :rating="info.averageRate" /></div>
                 <div class="fs-4 fw-light">총 {{ info.usersRated }}건</div>
             </div>
-            <div class="col-md-9">
-                <div class="progress mb-1">
-                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="col-md-9 py-3">
+                <div class="progress mb-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 60%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <div class="progress mb-1">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 70%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <div class="progress mb-1">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <div class="progress mb-1">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <div class="progress mb-1">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-2">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 10%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
@@ -59,7 +59,9 @@
                 <p>
                     {{ ele.comment }}
                 </p>
-                <p class="fc-80 fw-light">{{ ele.userNickname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ele.createdAt }}</p>
+                <p class="fc-80 fw-light">
+                    {{ ele.userNickname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ele.createdAt }}&nbsp;&nbsp;<span v-if="ismine(ele.userNickname)" v-on:click="delReview(ele.id)">삭제</span>
+                </p>
             </div>
         </div>
     </div>
@@ -87,6 +89,7 @@ export default {
             value1: null,
         };
     },
+    computed: {},
     methods: {
         SetRating(e) {
             this.myrate = e.target.value;
@@ -105,6 +108,16 @@ export default {
         },
         updateComment(e) {
             this.comment = e.target.value;
+        },
+
+        ismine(nick) {
+            return nick === localStorage.getItem("nickname");
+        },
+        delReview(id) {
+            BoardgameApi.requestDeleteReview(id).then(() => {
+                alert("리뷰를 삭제했습니다.");
+                this.$router.go();
+            });
         },
     },
 };
