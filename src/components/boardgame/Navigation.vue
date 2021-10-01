@@ -101,7 +101,7 @@ export default {
 
 @media screen and (max-width: 575px) {
   .tab > div {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 </style>

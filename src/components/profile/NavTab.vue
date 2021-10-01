@@ -4,7 +4,6 @@
     <div>
       <div class="user-info">
         <h3>Yeong-a</h3>
-        <p>yeong-a@naver.com</p>
       </div>
       <ul>
         <li @click="selectReview"><i class="far fa-comment-alt"></i> 리뷰</li>
@@ -54,12 +53,9 @@ export default {
 </script>
 
 <style scoped>
-h3, p {
+h3 {
   margin: 0;
-}
-
-p {
-  color: gray;
+  font-weight: bold;
 }
 
 .navtab {
@@ -123,14 +119,14 @@ ul li.disabled:hover {
 @media screen and (max-width: 767px){
   .navtab img {
     position: absolute;
-    top: 12px;
-    left: calc((100vw - 560px) / 2);
-    width: 56px;
-    height: 56px;
+    top: 0px;
+    left: calc((100vw - 572px) / 2);
+    width: 50px;
+    height: 50px;
   }
 
   .user-info {
-    margin-left: 77px;
+    margin-left: 67px;
   }
 }
 

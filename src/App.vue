@@ -9,6 +9,18 @@
     </div>
 </template>
 
+<script>
+export default {
+    name: "App",
+    created: function () {
+        const token = localStorage.getItem('jwt')
+        if (token) {
+            this.$store.state.headers.Authorization = token
+        }
+    }
+}
+</script>
+
 <style>
 @font-face {
     font-family: "Noto Sans CJK KR";

@@ -1,19 +1,42 @@
 import axios from "axios";
+import store from "@/store/index";
 
 const baseUrl = "http://j5a404.p.ssafy.io:9090";
 
-const requestQnaList = (data, callback, errorCallback) => {
-  return axios({
+const requestQnaList = async function(data, callback, errorCallback) {
+  const response = await axios({
     method: "GET",
     url: baseUrl + "/board/list",
-  }).then((res) => res.data.data);
+  });
+  return response.data.data;
 };
 
-const requestQnaDetail = (data, callback, errorCallback) => {
-  return axios({
+const requestQnaDetail = async function(data, callback, errorCallback) {
+  const response = await axios({
     method: "GET",
     url: baseUrl + `/board/${data}`,
-  }).then((res) => res.data);
+  });
+  return response.data;
+};
+
+const replyQnA = async function(data, callback, errorCallback) {
+  const response = await axios({
+    method: "POST",
+    url: baseUrl + "/board/reply",
+    headers: store.state.headers,
+    data: data,
+  });
+  return response.data;
+};
+
+const deleteReply = async function(data, callback, errorCallback) {
+  const response = await axios({
+    method: "DELETE",
+    url: baseUrl + "/board/reply",
+    headers: store.state.headers,
+    data: data,
+  });
+  return response;
 };
 
 const QnaApi = {
@@ -21,6 +44,10 @@ const QnaApi = {
     requestQnaList(data, callback, errorCallback),
   requestQnaDetail: (data, callback, errorCallback) =>
     requestQnaDetail(data, callback, errorCallback),
+  replyQnA: (data, callback, errorCallback) =>
+    replyQnA(data, callback, errorCallback),
+  deleteReply: (data, callback, errorCallback) =>
+    deleteReply(data, callback, errorCallback),
 };
 
 export default QnaApi;

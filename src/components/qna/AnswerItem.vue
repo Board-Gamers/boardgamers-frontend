@@ -1,60 +1,45 @@
 <template>
-  <div class="qna-detail">
-
-    <label class="q-mark">Q</label>
-    <div class="question">
-      <div>{{ data.question.content }}</div>
+  <div class="answer">
+    <label class="a-mark">A</label>
+    <div class="content">
+      <div>{{ data.content }}</div>
       <div>
-        <span>{{ data.question.writerNickname }}</span>
-        <span>{{ data.question.addDate }}</span>
+        <!-- {{ data }} -->
+        <span>{{ data.addDate }}</span>
+        <!-- <button @click="deleteReply"><i class="fas fa-trash-alt"></i></button> -->
       </div>
     </div>
-
-    <ReplyQnA :qnaId="data.question.id" @add-reply="addReply"/>
-
-    <AnswerItem v-for="(reply, idx) in replies" :data="reply" :key="idx"/>
-    
   </div>
 </template>
 
 <script>
-import ReplyQnA from "./ReplyQnA.vue"
-import AnswerItem from "./AnswerItem.vue"
+import QnaApi from "@/apis/QnaApi.js"
 
 export default {
-  name: "QnADetail",
-  components: {
-    ReplyQnA,
-    AnswerItem
-  },
+  name: "AnswerItem",
   props: {
     data: {
       type: Object
     }
   },
-  data: function () {
-    return {
-      replies: this.data.reply
-    }
-  },
   methods: {
-    addReply: function (e) {
-      this.replies.push(e)
-    }
-  },
+    // deleteReply: async function () {
+    //   const data = { id: this.data.qnaId }
+    //   const res = await QnaApi.deleteReply(data)
+    // }
+  }
 }
 </script>
 
 <style scoped>
-.qna-detail {
-  border-bottom: 2px solid #dee2e6;
-  padding: 13px 12px;
+.answer {
+  grid-column: 2 / 3;
   display: grid;
   grid-template-columns: 45px auto;
   gap: 20px;
 }
 
-.q-mark {
+.a-mark {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,26 +47,23 @@ export default {
   font-weight: bold;
   width: 45px;
   height: 45px;
-  background-color: #DAE98E;
+  background-color: #DBE8D8;
   border-radius: 50%;
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
-.question {
-  grid-column: 2 / 3;
-}
-
-.question > div:first-child {
+.content > div:first-child {
   padding: 10px 12px;
   display: flex;
   align-items: center;
-  border: 2px solid #DAE98E;
+  border: 2px solid #DBE8D8;
   border-radius: 5px;
   font-size: 16px;
 }
 
-.question > div:last-child {
+.content > div:last-child {
   display: flex;
+  align-items: flex-end;
   padding: 5px 12px;
   gap: 2vw;
   color: #808080;
@@ -89,39 +71,49 @@ export default {
   font-weight: bold;
 }
 
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+button:hover {
+  color: red;
+}
+
 @media screen and (max-width: 767px) {
-  .q-mark {
+  .a-mark {
     width: 35px;
     height: 35px;
     font-size: 1.2rem;
   }
 
-  .qna-detail {
+  .answer {
     grid-template-columns: 35px auto;
     gap: 15px;
   }
 
-  .question > div:first-child {
+  .content > div:first-child {
     padding: 5px 12px;
     font-size: 14px;
   }
 }
 
 @media screen and (max-width: 575px) {
-  .q-mark {
+  .a-mark {
     width: 30px;
     height: 30px;
     font-size: 1rem;
   }
 
-  .qna-detail {
+  .answer {
     grid-template-columns: 30px auto;
     gap: 10px;
   }
 
-  .question > div:first-child {
+  .content > div:first-child {
     padding: 5px 10px;
     font-size: 12px;
   }
 }
+
 </style>

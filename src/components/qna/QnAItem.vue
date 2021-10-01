@@ -51,6 +51,7 @@ export default {
   display: grid;
   grid-template-columns: 70px auto 140px 100px 80px;
   gap: 1vw;
+  transition: 0.25s;
 }
 
 .table-body:hover {
