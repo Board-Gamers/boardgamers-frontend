@@ -1,8 +1,8 @@
 <template>
-    <div class="p-3">
+    <div class="p-3 cur">
         <div class="game-img">
             <div class="inner">
-                <img :src="object.image" alt="" class="w-100 h-100" />
+                <img :src="object.thumbnail" alt="" class="w-100 h-100" />
             </div>
         </div>
         <div class="game-name pt-2 text-start">
@@ -41,5 +41,13 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+.cur {
+    cursor: pointer;
+}
+.cur:hover {
+    opacity: 0.5;
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
 }
 </style>
