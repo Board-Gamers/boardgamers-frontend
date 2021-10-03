@@ -9,6 +9,10 @@ export default new Vuex.Store({
     headers: {
       Authorization: null,
     },
+    recommend: {
+      rank: null,
+      review: null,
+    },
   },
   mutations: {
     GET_BOARDGAME_INFO(state, data) {

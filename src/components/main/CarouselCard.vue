@@ -3,49 +3,33 @@
     
     <h5 class="title">{{ title }}</h5>
 
-    <div class="head-list">
-      <div class="card-head">
-        <img src="@/assets/main/1.png" class="card-bg-img" alt="1">
-        <img src="@/assets/main/1.png" class="card-head-img" alt="1">
-        <h6>스플랜더</h6>
-      </div>
-
-      <div class="card-head">
-        <img src="@/assets/main/2.png" alt="2" class="card-bg-img">
-        <img src="@/assets/main/2.png" class="card-head-img" alt="2">
-        <h6>할리갈리</h6>
-      </div>
-
-      <div class="card-head">
-        <img src="@/assets/main/3.png" alt="3" class="card-bg-img">
-        <img src="@/assets/main/3.png" class="card-head-img" alt="3">
-        <h6>5초준다</h6>
-      </div>
-
-      <div class="card-head">
-        <img src="@/assets/main/4.png" alt="4" class="card-bg-img">
-        <img src="@/assets/main/4.png" class="card-head-img" alt="4">
-        <h6>카탄</h6>
-      </div>
+    <div v-if="games.length" class="head-list">
+      <CarouselCardHead v-for="(game, idx) in games" :key="idx" :game="game"/>
+      <button class="prev-btn" :disabled="!index" @click="prevBtn"></button>
+      <button class="next-btn" :disabled="index === 4" @click="nextBtn"></button>
     </div>
 
-
-    <div class="card-body">
-      <button :disabled="index === 0" @click="prevBtn">prev</button>
-      <button :disabled="index === 3" @click="nextBtn">next</button>
-      <p class="card-title"><span>1</span>Card title</p>
-      <p class="card-title"><span>2</span>Card title</p>
-      <p class="card-title"><span>3</span>Card title</p>
-      <p class="card-title"><span>4</span>Card title</p>
+    <div v-if="games.length" class="card-body">
+      <div v-for="(game, idx) in games" :key="idx" @click="selectGame(idx)"><span>{{ idx+1 }}</span>{{ game.nameKor }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import CarouselCardHead from "./CarouselCardHead.vue";
+
 export default {
   name: "CarouselCard",
+  components: {
+    CarouselCardHead
+  },
   props: {
-    title: String,
+    title: {
+      type: String,
+    },
+    games: {
+      type: Array
+    }
   },
   data: function () {
     return {
@@ -66,9 +50,18 @@ export default {
       const next = now.nextElementSibling
       now.classList.remove('active')
       next.classList.add('active')
-    }
+    },
+    selectGame: function (idx) {
+      if (this.index !== idx) {
+        this.index = idx
+        const now = this.$el.querySelector('.active')
+        const target = this.$el.querySelectorAll('.card-head')[idx]
+        now.classList.remove('active')
+        target.classList.add('active')
+      }
+    },
   },
-  mounted: function () {
+  mounted: async function () {
     const first_card = this.$el.querySelector('.card-head')
     first_card.classList.add('active')
   }
@@ -76,12 +69,51 @@ export default {
 </script>
 
 <style scoped>
-/* card bg img를 head-list의 css background로 넣고 card-head에 backdrop-filter 적용하기 */
-h5, h6 {
-  margin: 0;
+button {
   position: absolute;
-  color: white;
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+  top: 0;
+  background-color: unset;
+  border: unset;
+}
+
+.prev-btn {
+  left: 0;
+  justify-content: flex-end;
+}
+
+.prev-btn::before {
+  content: '';
+  position: absolute;
+  width: 40%;
+  aspect-ratio: 1;
+  box-shadow: -3px 3px 0px 1px #fff;
+  transform: rotate(45deg);
+}
+
+.prev-btn:disabled::before {
+  filter: brightness(50%);
+}
+
+.next-btn {
+  right: 0;
+  justify-content: flex-start;
+}
+
+.next-btn::before {
+  content: '';
+  position: absolute;
+  width: 40%;
+  aspect-ratio: 1;
+  box-shadow: 3px -3px 0px 1px #fff;
+  transform: rotate(45deg);
+}
+
+.next-btn:disabled::before {
+  filter: brightness(50%);
 }
 
 .carousel-card {
@@ -95,6 +127,10 @@ h5, h6 {
 .title {
   top: 5%;
   font-weight: bold;
+  margin: 0;
+  position: absolute;
+  color: white;
+  z-index: 1;
 }
 
 .head-list {
@@ -103,55 +139,20 @@ h5, h6 {
   aspect-ratio: 1/1.4;
 }
 
-.card-head {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-.card-head > h6 {
-  bottom: 10%;
-  opacity: 0;
-}
-
-.card-bg-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  filter: blur(5px) brightness(60%);
-  transition: 0.5s;
-  opacity: 0;
-}
-
-.card-head-img {
-  width: 50%;
-  z-index: 1;
-  transition: 0.5s;
-  transform: scale(0);
-}
-
 .card-body {
   width: 100%;
   text-align: start;
-}
-
-.card-head.active .card-head-img {
-  transform: scale(1);
-}
-
-.card-head.active :is(.card-bg-img, h6) {
-  opacity: 1;
-}
-
-.card-title {
   font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.card-title span {
+.card-body > div {
+  cursor: pointer;
+}
+
+.card-body span {
   color: gray;
   margin-right: 10px;
   font-size: 1.2em;
