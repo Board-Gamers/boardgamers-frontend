@@ -65,6 +65,7 @@
                                     role="tab"
                                     aria-controls="nav-contact"
                                     aria-selected="false"
+                                    v-on:click="getQnA"
                                 >
                                     Q&amp;A
                                 </button>
@@ -81,19 +82,25 @@
                             </div>
                             <!-- QnA -->
                             <div class="tab-pane fade p-4 bc" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                <div class="row py-2" v-for="ele in aba" v-bind:key="ele.key">
-                                    <div class="col-md-1">Q</div>
-                                    <div class="col-md-11 text-start">
-                                        <div class="border-c8 mb-2">이거 혹시 초등학생도 이해 가능한가요</div>
-                                        <div class="border-c8 mb-2">제 사촌동생이 3일 정도 놀러온다고 해서 같이 놀아주려고 하는데 이거 괜찮나요?? 평이 좋아보여서 의견 여쭤봅니다!</div>
-                                        <div class="fc-80 fw-light mb-2">아이디 2021.09.15</div>
+                                <!-- 질문 작성 -->
+                                <div class="row">
+                                    <div class="col-sm-1"><div class="p-1 bg-c8 fs-5">Q</div></div>
+                                    <div class="col-sm-11 text-start">
+                                        <div class="input-group mb-4">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="질문 하기"
+                                                aria-label="Recipient's username"
+                                                aria-describedby="button-addon2"
+                                                v-on:input="updateQuestion"
+                                            />
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="writeQuestion">작성</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-1">A</div>
-                                    <div class="col-md-10 text-start">
-                                        <div class="border-db mb-2">네! 나이랑 상관 없어요 제가 지금 5학년인데 저희 반에서 제일 잘 해요</div>
-                                        <div class="fc-80 fw-light mb-2">아이디 2021.09.15</div>
-                                    </div>
+                                </div>
+                                <div v-for="ele in qna" v-bind:key="ele.id">
+                                    <QnATap :ele="ele" />
                                 </div>
                             </div>
                         </div>
@@ -111,6 +118,7 @@ import Tap from "@/components/boardgame/Tap.vue";
 import InfoTap from "./BoardGameDetailTap/InfoTap.vue";
 import ReviewTap from "./BoardGameDetailTap/ReviewTap.vue";
 import StarRate from "@/components/boardgame/StarRate.vue";
+import QnATap from "./BoardGameDetailTap/QnATap.vue";
 import BoardgameApi from "@/apis/BoardgameApi.js";
 import "@/assets/css/font.css";
 import "@/assets/css/border.css";
@@ -123,6 +131,7 @@ export default {
         StarRate,
         InfoTap,
         ReviewTap,
+        QnATap,
     },
     created() {
         //console.log(this.$route.params.id);
@@ -140,12 +149,34 @@ export default {
                 this.review = res.data.data.reviews;
             });
         },
+        getQnA() {
+            let id = this.$route.params.id;
+
+            BoardgameApi.requestGameQuestion(id).then((res) => {
+                this.qna = res.data.data;
+            });
+        },
+        updateQuestion(e) {
+            this.question = e.target.value;
+        },
+        writeQuestion() {
+            let data = {
+                content: this.question,
+                gameId: this.$route.params.id,
+                title: this.question,
+            };
+            BoardgameApi.requestGameWriteQuestion(data, () => {
+                alert("질문을 작성했습니다");
+                this.$route.go();
+            });
+        },
     },
     data() {
         return {
             info: {},
             review: [],
-            aba: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            qna: [],
+            question: "",
         };
     },
 };

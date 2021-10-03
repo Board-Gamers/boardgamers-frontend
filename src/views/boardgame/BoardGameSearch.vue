@@ -104,6 +104,7 @@ export default {
         },
         goDetail(id) {
             this.$router.push({ name: "BoardGameDetail", params: { id: id } });
+            window.scrollTo(0, 0);
         },
         paging(page) {
             this.$router.push({ path: "search", query: { page: page, keyword: this.serachkeyword } });
