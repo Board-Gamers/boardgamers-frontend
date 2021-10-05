@@ -3,13 +3,13 @@
 
     <Navigation class="w-100"/>
     
-    <MainBanner />
+    <MainBanner v-if="bannerGames.length" :games="bannerGames"/>
 
     <br>
     <div class="card-list">
-      <CarouselCard v-if="rankGames.length" :games="rankGames" title="평점 높은 순"/>
+      <CarouselCard v-if="rankGames.length" :games="rankGames" title="평점 높은 순" @select-title="selectTitle"/>
       <div v-else class="loading">로딩중</div>
-      <CarouselCard v-if="reviewGames.length" :games="reviewGames" title="리뷰 많은 순" />
+      <CarouselCard v-if="reviewGames.length" :games="reviewGames" title="리뷰 많은 순" @select-title="selectTitle"/>
       <div v-else class="loading">로딩중</div>
       <div class="loading">로딩중</div>
       <div class="loading">로딩중</div>
@@ -18,7 +18,6 @@
     </div>
 
     <br>
-    
 
   </div>
 </template>
@@ -37,12 +36,20 @@ export default {
     MainBanner,
     CarouselCard,
   },
+  data: function () {
+    return {
+      selectedGames: null
+    }
+  },
   methods: {
     getRankRec: async function () {
       return this.$store.state.recommend.rank ?? await RecApi.rankRec()
     },
     getReviewRec: async function () {
       return this.$store.state.recommend.review ?? await RecApi.reviewRec()
+    },
+    selectTitle: function (title) {
+      this.selectedGames = title === 'rank' ? this.$store.state.recommend.rank : this.$store.state.recommend.review
     }
   },
   computed: {
@@ -51,6 +58,9 @@ export default {
     },
     reviewGames: function () {
       return this.$store.state.recommend.review?.games.slice(0, 5) ?? []
+    },
+    bannerGames: function () {
+      return [...this.rankGames, ...this.reviewGames]
     }
   },
   mounted: async function () {
@@ -74,6 +84,7 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .loading {

@@ -2,7 +2,7 @@
   <div class="card-head">
     <img :src="game.image" class="card-bg-img" alt="bg-image">
     <img :src="game.image" class="card-head-img" alt="game-image">
-    <h6>{{ game.nameKor }}</h6>
+    <h6 @click="goToDetail">{{ game.nameKor }}</h6>
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
       type: Object
     }
   },
+  methods: {
+    goToDetail: function () {
+      this.$router.push({ name: 'BoardGameDetail', params: { id: this.game.id }})
+    }
+  }
 }
 </script>
 
@@ -25,6 +30,13 @@ h6 {
   z-index: 1;
   bottom: 10%;
   opacity: 0;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+h6:hover {
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 .card-head {
@@ -35,6 +47,11 @@ h6 {
   overflow: hidden;
   width: 100%;
   height: 100%;
+  z-index: 0;
+}
+
+.card-head.active {
+  z-index: 1;
 }
 
 .card-bg-img {

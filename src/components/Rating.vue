@@ -1,7 +1,19 @@
 <template>
   <span class="rating">
-    <span>★★★★★</span>
-    <span>☆☆☆☆☆</span>
+    <span>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+    </span>
+    <span>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+    </span>
   </span>
 </template>
 
@@ -23,13 +35,15 @@ export default {
       type: String,
     }
   },
-  mounted: function () {
-    const rate = this.$el
-    const score = rate.firstElementChild
-    rate.style.color = this.color
-    rate.style.fontSize = `${this.size}px`
-    score.style.width = `${10 * this.value}%`
-  }
+  watch: {
+    value: function () {
+      const rate = this.$el
+      const score = rate.firstElementChild
+      rate.style.color = this.color
+      rate.style.fontSize = `${this.size}px`
+      score.style.width = `${10 * this.value}%`
+    }
+  },
 }
 </script>
 
@@ -41,8 +55,12 @@ export default {
 .rating > span:first-child {
   position: absolute;
   overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
-  width: 100%;
 }
 </style>
