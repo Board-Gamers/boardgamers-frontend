@@ -1,7 +1,7 @@
 <template>
   <div class="card-head">
-    <img :src="game.image" class="card-bg-img" alt="bg-image">
-    <img :src="game.image" class="card-head-img" alt="game-image">
+    <img :src="game.thumbnail" class="card-bg-img" alt="bg-image">
+    <img :src="game.thumbnail" class="card-head-img" alt="game-image">
     <h6 @click="goToDetail">{{ game.nameKor }}</h6>
   </div>
 </template>

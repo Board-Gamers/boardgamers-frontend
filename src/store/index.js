@@ -12,6 +12,8 @@ export default new Vuex.Store({
     recommend: {
       rank: null,
       review: null,
+      topRank: null,
+      topReview: null,
     },
   },
   mutations: {

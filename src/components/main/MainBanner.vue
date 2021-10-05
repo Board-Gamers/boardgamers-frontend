@@ -13,7 +13,7 @@
         <img src="@/assets/main/playnum.png" alt="playnum">
         <p class="fw-bold">게임 인원</p>
         <p v-if="mainBanner.minPlayers-mainBanner.maxPlayers">{{ mainBanner.minPlayers }} ~ {{ mainBanner.maxPlayers }}명</p>
-        <p v-else>{{ mainBanner.minPlayers}}명</p>
+        <p v-else>{{ mainBanner.minPlayers }}명</p>
       </div>
       <div>
         <img src="@/assets/main/age.png" alt="age">

@@ -3,7 +3,7 @@
     <div class="table-body" @click="getQnaDetail(data.id)">
       <div>{{ data.id }}</div>
       <div class="text-start">{{ data.title }}
-        <div v-if="data.is_reply" class="bg-success reply-chip">답변완료</div>
+        <div v-if="data.answered" class="bg-success reply-chip">답변완료</div>
       </div>
       <div>{{ data.writerNickname }}</div>
       <div>{{ data.addDate.slice(0, 8) }}</div>

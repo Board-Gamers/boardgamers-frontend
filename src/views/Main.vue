@@ -11,13 +11,13 @@
       <div v-else class="loading">로딩중</div>
       <CarouselCard v-if="reviewGames.length" :games="reviewGames" title="리뷰 많은 순" @select-title="selectTitle"/>
       <div v-else class="loading">로딩중</div>
-      <div class="loading">로딩중</div>
-      <div class="loading">로딩중</div>
+      <div class="loading">준비중</div>
+      <div class="loading">준비중</div>
       <!-- <CarouselCard title="유저 추천 순"/> -->
       <!-- <CarouselCard title="비슷한 게임"/> -->
     </div>
 
-    <br>
+    <RecommendList v-if="selectedGames" :title="selectedGames"/>
 
   </div>
 </template>
@@ -28,6 +28,7 @@ import RecApi from "@/apis/RecommendApi.js";
 import Navigation from "@/components/boardgame/Navigation.vue";
 import MainBanner from "@/components/main/MainBanner.vue";
 import CarouselCard from "@/components/main/CarouselCard.vue";
+import RecommendList from "@/components/main/RecommendList.vue";
 
 export default {
   name: "Main",
@@ -35,6 +36,7 @@ export default {
     Navigation,
     MainBanner,
     CarouselCard,
+    RecommendList,
   },
   data: function () {
     return {
@@ -43,21 +45,33 @@ export default {
   },
   methods: {
     getRankRec: async function () {
-      return this.$store.state.recommend.rank ?? await RecApi.rankRec()
+      if (this.$store.state.recommend.rank) {
+        return this.$store.state.recommend.rank
+      } else {
+        const response = await RecApi.rankRec()
+        this.$store.state.recommend.topRank = response
+        return response
+      }
     },
     getReviewRec: async function () {
-      return this.$store.state.recommend.review ?? await RecApi.reviewRec()
+      if (this.$store.state.recommend.rank) {
+        return this.$store.state.recommend.rank
+      } else {
+        const response = await RecApi.reviewRec()
+        this.$store.state.recommend.topReview = response
+        return response
+      }
     },
     selectTitle: function (title) {
-      this.selectedGames = title === 'rank' ? this.$store.state.recommend.rank : this.$store.state.recommend.review
+      this.selectedGames = title
     }
   },
   computed: {
     rankGames: function () {
-      return this.$store.state.recommend.rank?.games.slice(0, 5) ?? []
+      return this.$store.state.recommend.topRank?.games.slice(0, 5) ?? []
     },
     reviewGames: function () {
-      return this.$store.state.recommend.review?.games.slice(0, 5) ?? []
+      return this.$store.state.recommend.topReview?.games.slice(0, 5) ?? []
     },
     bannerGames: function () {
       return [...this.rankGames, ...this.reviewGames]
@@ -65,8 +79,7 @@ export default {
   },
   mounted: async function () {
     const response = await Promise.all([this.getRankRec(), this.getReviewRec()])
-    this.$store.state.recommend.rank = response[0]
-    this.$store.state.recommend.review = response[1]
+    this.$store.state.recommend = { ...this.$store.state.recommend, rank: response[0], review: response[1]}
   }
 }
 </script>

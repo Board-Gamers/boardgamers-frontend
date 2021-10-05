@@ -2,20 +2,20 @@ import axios from "axios";
 
 const baseUrl = "http://j5a404.p.ssafy.io:9090";
 
-const rankRec = async function(data, callback, errorCallback) {
+const rankRec = async function(data = 1, callback, errorCallback) {
   const response = await axios({
     method: "GET",
     url: baseUrl + "/game/search",
-    params: { order: "rank" },
+    params: { page: data, order: "rank", pageSize: 9 },
   });
   return response.data.data;
 };
 
-const reviewRec = async function(data, callback, errorCallback) {
+const reviewRec = async function(data = 1, callback, errorCallback) {
   const response = await axios({
     method: "GET",
     url: baseUrl + "/game/search",
-    params: { order: "review" },
+    params: { page: data, order: "review", pageSize: 9 },
   });
   return response.data.data;
 };

@@ -35,8 +35,8 @@ export default {
       type: String,
     }
   },
-  watch: {
-    value: function () {
+  methods: {
+    calcRate: function () {
       const rate = this.$el
       const score = rate.firstElementChild
       rate.style.color = this.color
@@ -44,12 +44,21 @@ export default {
       score.style.width = `${10 * this.value}%`
     }
   },
+  watch: {
+    value: function () {
+      this.calcRate()
+    }
+  },
+  mounted: function () {
+    this.calcRate()
+  }
 }
 </script>
 
 <style scoped>
 .rating {
   position: relative;
+  display: inline !important;
 }
 
 .rating > span:first-child {
@@ -58,9 +67,9 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
   height: 100%;
   top: 0;
   left: 0;
 }
+
 </style>

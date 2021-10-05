@@ -68,6 +68,7 @@ export default {
   mounted: async function () {
     const first_card = this.$el.querySelector('.card-head')
     first_card.classList.add('active')
+    this.$emit('select-title', 'rank')
   }
 }
 </script>
@@ -131,6 +132,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .title {
