@@ -9,7 +9,7 @@
       <div class="px-2 btn" v-on:click="goLogout" v-if="isLogin"><i class="fas fa-sign-out-alt"></i><br />로그아웃</div>
       <div class="px-2 btn" v-on:click="goLogin" v-else><i class="fas fa-sign-in-alt"></i><br />로그인</div>
       <div class="px-2 btn" v-on:click="goQna"><i class="far fa-question-circle"></i><br />고객센터</div>
-      <div class="px-2 btn" v-on:click="goProfile"><i class="fas fa-user"></i><br />내 프로필</div>
+      <div class="px-2 btn" v-on:click="goProfile" v-if="isLogin"><i class="fas fa-user"></i><br />내 프로필</div>
     </div>
   </div>
 </template>
@@ -37,7 +37,8 @@ export default {
       if (this.$route.name !== "QnA") this.$router.push({ name: "QnA" });
     },
     goProfile() {
-      if (this.$route.name !== "Profile") this.$router.push({ name: "Profile", params: { nickname: 'asd' } });
+      const nickname = localStorage.getItem('nickname')
+      this.$router.push({ name: "Profile", params: { nickname: nickname } });
     },
     goLogout() {
       localStorage.clear();

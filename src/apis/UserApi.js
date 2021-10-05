@@ -29,11 +29,20 @@ const requestLogin = (data, callback, errorCallback) => {
     });
 };
 
+// 회원정보
+const requestUserInfo = (data, callback, errorCallback) => {
+  axios.get(baseUrl + `/user/${data}`).then((res) => {
+    store.state.userInfo = { ...res.data.data };
+  });
+};
+
 const UserApi = {
   requestSignUp: (data, callback, errorCallback) =>
     requestSignUp(data, callback, errorCallback),
   requestLogin: (data, callback, errorCallback) =>
     requestLogin(data, callback, errorCallback),
+  requestUserInfo: (data, callback, errorCallback) =>
+    requestUserInfo(data, callback, errorCallback),
 };
 
 export default UserApi;

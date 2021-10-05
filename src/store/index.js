@@ -15,6 +15,7 @@ export default new Vuex.Store({
       topRank: null,
       topReview: null,
     },
+    userInfo: null,
   },
   mutations: {
     GET_BOARDGAME_INFO(state, data) {

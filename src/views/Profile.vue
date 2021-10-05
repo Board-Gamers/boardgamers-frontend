@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import UserApi from "@/apis/UserApi.js";
+
 import Navigation from "@/components/boardgame/Navigation.vue";
 import NavTab from "@/components/profile/NavTab.vue";
 import MyReviews from "@/components/profile/reviews/MyReviews.vue";
@@ -39,13 +41,18 @@ export default {
   },
   data: function () {
     return {
-      selectedTab: 'review'
+      selectedTab: 'review',
+      userInfo: null
     }
   },
   methods: {
     selectTab: function (tab) {
       this.selectedTab = tab
     }
+  },
+  mounted: function () {
+    const nickname = this.$route.params.nickname
+    UserApi.requestUserInfo(nickname)
   }
 }
 </script>

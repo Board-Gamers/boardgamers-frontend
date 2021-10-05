@@ -48,6 +48,7 @@ export default {
   methods: {
     goToDetail: function () {
       this.$router.push({ name: 'BoardGameDetail', params: { id: this.game.id }})
+      window.scrollTo(0, 0)
     }
   },
   filters: {

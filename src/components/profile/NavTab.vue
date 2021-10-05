@@ -3,14 +3,14 @@
     <img src="@/assets/profile/profile_image.png" alt="profile">
     <div>
       <div class="user-info">
-        <h3>Yeong-a</h3>
+        <h3>{{ $route.params.nickname }}</h3>
       </div>
       <ul>
         <li @click="selectReview"><i class="far fa-comment-alt"></i> 리뷰</li>
         <li @click="selectMission"><i class="fas fa-medal"></i> 달성</li>
         <li @click="selectGame"><i class="far fa-folder-open"></i> 즐겨찾기</li>
-        <li @click="selectSetting"><i class="fas fa-cog"></i> 설정</li>
-        <!-- <li class="disabled"><i class="fas fa-cog"></i> 설정</li> -->
+        <li @click="selectSetting" v-if="isMyAccount"><i class="fas fa-cog"></i> 설정</li>
+        <li class="disabled" v-else><i class="fas fa-cog"></i> 설정</li>
       </ul>
     </div>
   </div>
@@ -19,6 +19,11 @@
 <script>
 export default {
   name: "NavTab",
+  data: function () {
+    return {
+      isMyAccount: false
+    }
+  },
   methods: {
     selectTab: function (e) {
       const tab = e.currentTarget
@@ -48,6 +53,9 @@ export default {
   mounted: function () {
     const x = this.$el.querySelector('li')
     x.classList.add('active')
+    const account = this.$route.params.nickname
+    const me = localStorage.getItem('nickname')
+    this.isMyAccount = account === me ?? false
   }
 }
 </script>

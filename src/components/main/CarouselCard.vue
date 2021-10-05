@@ -1,7 +1,7 @@
 <template>
   <div class="card carousel-card">
     
-    <h5 class="title" @click="selectTitle">{{ title }}</h5>
+    <h5 class="title">{{ title }}</h5>
 
     <div v-if="games.length" class="head-list">
       <CarouselCardHead v-for="(game, idx) in games" :key="idx" :game="game"/>
@@ -60,10 +60,6 @@ export default {
         target.classList.add('active')
       }
     },
-    selectTitle: function () {
-      const title = this.title === '평점 높은 순' ? 'rank' : 'review'
-      this.$emit('select-title', title)
-    }
   },
   mounted: async function () {
     const first_card = this.$el.querySelector('.card-head')
@@ -74,10 +70,6 @@ export default {
 </script>
 
 <style scoped>
-h5 {
-  cursor: pointer;
-}
-
 button {
   position: absolute;
   display: flex;

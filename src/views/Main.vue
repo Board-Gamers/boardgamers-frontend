@@ -7,9 +7,9 @@
 
     <br>
     <div class="card-list">
-      <CarouselCard v-if="rankGames.length" :games="rankGames" title="평점 높은 순" @select-title="selectTitle"/>
+      <CarouselCard v-if="rankGames.length" :games="rankGames" title="평점 높은 순" />
       <div v-else class="loading">로딩중</div>
-      <CarouselCard v-if="reviewGames.length" :games="reviewGames" title="리뷰 많은 순" @select-title="selectTitle"/>
+      <CarouselCard v-if="reviewGames.length" :games="reviewGames" title="리뷰 많은 순" />
       <div v-else class="loading">로딩중</div>
       <div class="loading">준비중</div>
       <div class="loading">준비중</div>
@@ -17,7 +17,7 @@
       <!-- <CarouselCard title="비슷한 게임"/> -->
     </div>
 
-    <RecommendList v-if="selectedGames" :title="selectedGames"/>
+    <RecommendList />
 
   </div>
 </template>
@@ -38,11 +38,6 @@ export default {
     CarouselCard,
     RecommendList,
   },
-  data: function () {
-    return {
-      selectedGames: null
-    }
-  },
   methods: {
     getRankRec: async function () {
       if (this.$store.state.recommend.rank) {
@@ -62,9 +57,6 @@ export default {
         return response
       }
     },
-    selectTitle: function (title) {
-      this.selectedGames = title
-    }
   },
   computed: {
     rankGames: function () {
