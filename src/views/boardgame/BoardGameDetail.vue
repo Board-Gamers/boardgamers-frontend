@@ -13,7 +13,7 @@
                 <div class="col-sm-10">
                     <div class="row mb-5">
                         <div class="col-md-5">
-                            <img class="w-100" :src="info.image" alt="" />
+                            <img class="w-100" :src="info.image" alt="" style="height:220px;" />
                         </div>
                         <div class="col-md-7 text-start py-1">
                             <div class=" fs-3 fw-500 mb-1">
@@ -74,7 +74,7 @@
                         <div class="tab-content" id="nav-tabContent">
                             <!-- detail -->
                             <div class="tab-pane fade show active p-4 bc" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <InfoTap :info="info" />
+                                <InfoTap :info="info" :videoId="videoid" />
                             </div>
                             <!-- Review -->
                             <div class="tab-pane fade p-4 bc" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -120,6 +120,7 @@ import ReviewTap from "./BoardGameDetailTap/ReviewTap.vue";
 import StarRate from "@/components/boardgame/StarRate.vue";
 import QnATap from "./BoardGameDetailTap/QnATap.vue";
 import BoardgameApi from "@/apis/BoardgameApi.js";
+import YoutubeApi from "@/apis/YoutubeApi.js";
 import "@/assets/css/font.css";
 import "@/assets/css/border.css";
 
@@ -138,7 +139,12 @@ export default {
         let id = this.$route.params.id;
         BoardgameApi.requestGameInfo(id).then((res) => {
             this.info = res.data.data;
+            let name = this.info.nameKor ? this.info.nameKor : this.info.name;
+            YoutubeApi.requestYoutube(name).then((res) => {
+                this.videoid = "https://www.youtube.com/embed/" + res.data.items[0].id.videoId;
+            });
         });
+
         // console.log(this.$store.getters.getBoardgameinfo);
     },
     computed: {},
@@ -177,6 +183,7 @@ export default {
             review: [],
             qna: [],
             question: "",
+            videoid: "",
         };
     },
 };

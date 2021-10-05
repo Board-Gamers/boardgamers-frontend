@@ -1,6 +1,15 @@
 <template>
     <div>
-        <div class="row mb-4">
+        <iframe
+            width="560"
+            height="315"
+            :src="videoId"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+        ></iframe>
+        <div class="row my-4">
             <div class="col">
                 <p class="fs-0"><i class="far fa-user"></i></p>
                 <p class="fs-4 fc-80">게임 인원</p>
@@ -55,6 +64,7 @@ export default {
     name: "Infotap",
     props: {
         info: Object,
+        videoId: String,
     },
 };
 </script>
