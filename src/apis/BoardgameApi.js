@@ -5,7 +5,10 @@ const baseUrl = "http://j5a404.p.ssafy.io:9090";
 
 // 보드게임 검색 결과 가져오기
 const requestGameSearch = (data, callback, errorCallback) => {
-    return axios.get(baseUrl + `/game/search?category=${data.category}&keyword=${data.keyword}&page=${data.page}&pageSize=12`);
+    return axios.get(
+        baseUrl +
+            `/game/search?category=${data.category}&keyword=${data.keyword}&page=${data.page}&pageSize=12&maxPlayTime=${data.maxPlayTime}&minPlayers=${data.minPlayers}&maxPlayers=${data.maxPlayers}&minAge=${data.minAge}`
+    );
 };
 
 // 보드게임 정보 가져오기
