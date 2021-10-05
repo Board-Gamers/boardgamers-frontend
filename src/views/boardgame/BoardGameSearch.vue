@@ -11,20 +11,6 @@
                     <Tap />
                 </div>
                 <div class="col-sm-10">
-                    <div class="row">
-                        <div class="input-group mb-3 px-4">
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="이름으로 검색"
-                                aria-label="Recipient's username"
-                                aria-describedby="button-addon2"
-                                @keyup.enter="keywordSearch"
-                                v-on:input="updatekey"
-                            />
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="keywordSearch">검색</button>
-                        </div>
-                    </div>
                     <div class="row row-cols-2 row-cols-sm-3">
                         <div class="col" v-for="ele in elements" v-bind:key="ele.id" v-on:click="goDetail(ele.id)">
                             <Element :object="ele" />
@@ -79,7 +65,6 @@ export default {
             nowPage: 0,
             nowPageSize: 0,
             pages: [1, 2, 3, 4, 5],
-            serachkeyword: "",
         };
     },
     watch: {
@@ -92,6 +77,10 @@ export default {
                 keyword: this.$route.query.keyword ? this.$route.query.keyword : "",
                 category: this.$route.query.category ? this.$route.query.category : "",
                 page: this.$route.query.page ? this.$route.query.page : 1,
+                maxPlayTime: this.$route.query.maxPlayTime ? this.$route.query.maxPlayTime : "",
+                minPlayers: this.$route.query.minPlayers ? this.$route.query.minPlayers : "",
+                maxPlayers: this.$route.query.maxPlayers ? this.$route.query.maxPlayers : "",
+                minAge: this.$route.query.minAge ? this.$route.query.minAge : "",
             };
 
             BoardgameApi.requestGameSearch(data).then((res) => {
@@ -107,7 +96,16 @@ export default {
             window.scrollTo(0, 0);
         },
         paging(page) {
-            this.$router.push({ path: "search", query: { page: page, keyword: this.serachkeyword } });
+            let que = {
+                keyword: this.$route.query.keyword ? this.$route.query.keyword : "",
+                category: this.$route.query.category ? this.$route.query.category : "",
+                page: page,
+                maxPlayTime: this.$route.query.maxPlayTime ? this.$route.query.maxPlayTime : "",
+                minPlayers: this.$route.query.minPlayers ? this.$route.query.minPlayers : "",
+                maxPlayers: this.$route.query.maxPlayers ? this.$route.query.maxPlayers : "",
+                minAge: this.$route.query.minAge ? this.$route.query.minAge : "",
+            };
+            this.$router.push({ path: "search", query: que });
             window.scrollTo(0, 0);
         },
         prenex(key) {
@@ -117,13 +115,6 @@ export default {
             if (key == 0) {
                 if (this.pages[0] != 1) this.pages = this.pages.map((x) => x - 5);
             }
-        },
-        keywordSearch() {
-            if (!this.serachkeyword) return;
-            this.$router.push({ path: "search", query: { keyword: this.serachkeyword } });
-        },
-        updatekey(e) {
-            this.serachkeyword = e.target.value;
         },
     },
 };
