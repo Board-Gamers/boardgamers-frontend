@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-2">
-                    <Tap />
+                    <!-- <Tap /> -->
                 </div>
                 <div class="col-sm-10">
                     <div class="row mb-5">
@@ -173,7 +173,7 @@ export default {
             };
             BoardgameApi.requestGameWriteQuestion(data, () => {
                 alert("질문을 작성했습니다");
-                this.$route.go();
+                this.$router.go();
             });
         },
     },

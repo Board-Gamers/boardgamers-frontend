@@ -70,7 +70,15 @@ export default {
 
             if (data.password !== this.passwordConfirm) alert("비밀번호가 다릅니다!");
 
-            UserApi.requestSignUp(data);
+            UserApi.requestSignUp(data, () => {
+                let logdata = {
+                    loginId: this.email,
+                    password: this.password,
+                };
+                UserApi.requestLogin(logdata, () => {
+                    this.$router.push({ name: "Rating" });
+                });
+            });
             // alert(`
             //     email: ${this.email},
             //     certi: ${this.certi},

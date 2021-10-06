@@ -77,7 +77,7 @@ export default {
         },
         getReply(id) {
             BoardgameApi.requestGameQuestionReply(id).then((res) => {
-                this.reply = res.data.data;
+                this.reply = res.data.data[0];
             });
         },
         // updateReply(e) {
