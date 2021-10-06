@@ -1,15 +1,31 @@
 <template>
   <div class="table-body">
-    <div>★★★★★ 10</div>
-    <div class="text-start">내용</div>
-    <div>스플랜더</div>
+    <div><Rating :value="review.rating"/> {{ review.rating }}</div>
+    <div class="text-start">{{ review.comment }}</div>
+    <div @click="goToGameDetail" style="cursor: pointer;">{{ review.gameName }}</div>
     <div>21.08.25</div>
+    <!-- {{ review }} -->
   </div>
 </template>
 
 <script>
+import Rating from "@/components/Rating.vue";
+
 export default {
-  name: "ReviewItems"
+  name: "ReviewItems",
+  props: {
+    review: {
+      type: Object
+    }
+  },
+  components: {
+    Rating,
+  },
+  methods: {
+    goToGameDetail: function () {
+      this.$router.push({ name: 'BoardGameDetail', params: { id: this.review.gameId }})
+    }
+  }
 }
 </script>
 

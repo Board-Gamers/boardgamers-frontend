@@ -7,17 +7,19 @@
     
     <br>
 
-    <button>Pagination</button>
+    <Pagination class="d-flex justify-content-center"/>
   </div>
 </template>
 
 <script>
 import GameItems from "./GameItems.vue";
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   name: "MyGames",
   components: {
     GameItems,
+    Pagination
   }
 }
 </script>

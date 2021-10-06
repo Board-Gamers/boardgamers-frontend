@@ -4,9 +4,8 @@
     <div class="content">
       <div>{{ data.content }}</div>
       <div>
-        <!-- {{ data }} -->
         <span>{{ data.addDate }}</span>
-        <!-- <button @click="deleteReply"><i class="fas fa-trash-alt"></i></button> -->
+        <button @click="deleteReply"><i class="fas fa-trash-alt"></i></button>
       </div>
     </div>
   </div>
@@ -23,10 +22,12 @@ export default {
     }
   },
   methods: {
-    // deleteReply: async function () {
-    //   const data = { id: this.data.qnaId }
-    //   const res = await QnaApi.deleteReply(data)
-    // }
+    deleteReply: async function () {
+      const data = { id: this.data.id }
+      const res = await QnaApi.deleteReply(data)
+      alert(res.data.message)
+      this.$emit('delete-reply')
+    }
   }
 }
 </script>

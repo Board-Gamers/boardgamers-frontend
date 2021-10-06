@@ -21,6 +21,7 @@ const requestLogin = (data, callback, errorCallback) => {
     .then((res) => {
       localStorage.setItem("nickname", res.data.nickname);
       localStorage.setItem("jwt", res.headers.authorization);
+      localStorage.setItem("id", data.loginId);
       store.state.headers.Authorization = res.headers.authorization;
       callback(res.data.nickname);
     })
@@ -31,9 +32,37 @@ const requestLogin = (data, callback, errorCallback) => {
 
 // 회원정보
 const requestUserInfo = (data, callback, errorCallback) => {
-  axios.get(baseUrl + `/user/${data}`).then((res) => {
-    store.state.userInfo = { ...res.data.data };
+  return axios.get(baseUrl + `/user/${data}`);
+};
+
+// 비밀번호 수정
+const updatePassword = (data, callback, errorCallback) => {
+  return axios({
+    method: "PUT",
+    url: baseUrl + `/user/${data.id}`,
+    data: data.credentials,
+    headers: store.state.headers,
   });
+};
+
+// 회원정보 변경
+const updateUserInfo = (data, callback, errorCallback) => {
+  return axios({
+    method: "PUT",
+    url: baseUrl + "/user",
+    data: data,
+    headers: store.state.headers,
+  });
+};
+
+// 작성한 리뷰 받아오기
+const requestUserReview = async function(data, callback, errorCallback) {
+  const response = await axios({
+    method: "GET",
+    url: baseUrl + `/user/${data}`,
+    params: { type: "review" },
+  });
+  return response.data.data;
 };
 
 const UserApi = {
@@ -43,6 +72,12 @@ const UserApi = {
     requestLogin(data, callback, errorCallback),
   requestUserInfo: (data, callback, errorCallback) =>
     requestUserInfo(data, callback, errorCallback),
+  updatePassword: (data, callback, errorCallback) =>
+    updatePassword(data, callback, errorCallback),
+  updateUserInfo: (data, callback, errorCallback) =>
+    updateUserInfo(data, callback, errorCallback),
+  requestUserReview: (data, callback, errorCallback) =>
+    requestUserReview(data, callback, errorCallback),
 };
 
 export default UserApi;

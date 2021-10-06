@@ -11,28 +11,37 @@
       <div>작성일</div>
     </div>
 
-    <div>
-      <ReviewItems v-for="n in 10" :key="n"/>
+    <div v-if="list">
+      <ReviewItems v-for="(review, idx) in list" :key="idx" :review="review"/>
     </div>
 
     <br>
 
-    <button>Pagination</button>
+    <Pagination class="d-flex justify-content-center"/>
   </div>
 </template>
 
 <script>
+import UserApi from "@/apis/UserApi.js";
+
 import ReviewItems from "./ReviewItems.vue";
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   name: "MyReviews",
   components: {
     ReviewItems,
+    Pagination
   },
   data: function () {
     return {
-      rate: 5
+      list: null
     }
+  },
+  mounted: async function () {
+    const nickname = this.$route.params.nickname
+    const response = await UserApi.requestUserReview(nickname)
+    this.list = [...response.list]
   }
 }
 </script>

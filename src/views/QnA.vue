@@ -7,8 +7,10 @@
         <h2>고객센터</h2>
         <p>자유롭게 질문을 올릴 수 있습니다.<br />적절하지 않은 게시글은 관리자에 의해 삭제 조치될 수 있습니다.</p>
       </div>
-      <button class="btn btn-primary write-btn">글 쓰기</button>
+      <button class="btn btn-primary write-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >글 쓰기</button>
     </div>
+
+    <UploadBoard @upload-board="uploadBoard"/>
 
     <div class="table-header">
       <div>번호</div>
@@ -19,31 +21,41 @@
     </div>
 
     <div v-if="qna.length">
-      <QnAItem v-for="(data, idx) in qna" :key="idx" :data="data" />
+      <QnAItem v-for="(data, idx) in qna" :key="idx" :data="data" @update-reply="updateReply"/>
     </div>
   </div>
 </template>
 
 <script>
+import QnaApi from "@/apis/QnaApi.js";
+
 import Navigation from "@/components/boardgame/Navigation.vue";
 import QnAItem from "@/components/qna/QnAItem.vue";
-import QnaApi from "@/apis/QnaApi.js";
+import UploadBoard from "@/components/qna/UploadBoard.vue";
 
 export default {
   name: "QnA",
   components: {
     Navigation,
     QnAItem,
+    UploadBoard
   },
   data: function() {
     return {
-      qna: []
+      qna: [],
+      openModal: true
     };
   },
   methods: {
     getQnaList: async function () {
       const res = await QnaApi.requestQnaList()
       this.qna = res.questions
+    },
+    updateReply: function () {
+      this.getQnaList()
+    },
+    uploadBoard: function () {
+      this.getQnaList()
     }
   },
   mounted: async function () {

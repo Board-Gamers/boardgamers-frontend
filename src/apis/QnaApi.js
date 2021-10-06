@@ -34,6 +34,16 @@ const deleteReply = async function(data, callback, errorCallback) {
     method: "DELETE",
     url: baseUrl + "/board/reply",
     headers: store.state.headers,
+    params: data,
+  });
+  return response;
+};
+
+const uploadBoard = async function(data, callback, errorCallback) {
+  const response = await axios({
+    method: "POST",
+    url: baseUrl + "/board/upload",
+    headers: store.state.headers,
     data: data,
   });
   return response;
@@ -48,6 +58,8 @@ const QnaApi = {
     replyQnA(data, callback, errorCallback),
   deleteReply: (data, callback, errorCallback) =>
     deleteReply(data, callback, errorCallback),
+  uploadBoard: (data, callback, errorCallback) =>
+    uploadBoard(data, callback, errorCallback),
 };
 
 export default QnaApi;

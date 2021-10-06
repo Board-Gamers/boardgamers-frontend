@@ -50,9 +50,13 @@ export default {
       this.selectedTab = tab
     }
   },
-  mounted: function () {
+  created: async function () {
     const nickname = this.$route.params.nickname
-    UserApi.requestUserInfo(nickname)
+    try {
+      await UserApi.requestUserInfo(nickname)
+    } catch {
+      this.$router.push({ name: 'Page404' })
+    }
   }
 }
 </script>

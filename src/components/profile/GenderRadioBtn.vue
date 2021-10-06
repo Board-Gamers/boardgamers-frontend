@@ -23,6 +23,9 @@ export default {
   watch: {
     gender: function () {
       this.$emit('input', this.gender)
+    },
+    value: function () {
+      this.gender = this.value
     }
   }
 }

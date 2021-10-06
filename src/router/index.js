@@ -6,6 +6,7 @@ import Profile from "@/views/Profile.vue";
 import Login from "@/views/user/Login.vue";
 import Signup from "@/views/user/SignUp.vue";
 import Rating from "@/views/user/InitialRating.vue";
+import Page404 from "@/views/Page404.vue";
 import BoardGameDetail from "@/views/boardgame/BoardGameDetail.vue";
 import BoardGameSearch from "@/views/boardgame/BoardGameSearch.vue";
 
@@ -33,6 +34,11 @@ const routes = [
     component: QnA,
   },
   {
+    path: "/404",
+    name: "Page404",
+    component: Page404,
+  },
+  {
     path: "/profile/:nickname",
     name: "Profile",
     component: Profile,
@@ -47,11 +53,11 @@ const routes = [
     name: "BoardGameSearch",
     component: BoardGameSearch,
   },
-    {
-        path: "/rating",
-        name: "Rating",
-        component: Rating,
-    },
+  {
+    path: "/rating",
+    name: "Rating",
+    component: Rating,
+  },
 ];
 
 const router = new VueRouter({

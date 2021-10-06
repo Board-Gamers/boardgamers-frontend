@@ -34,7 +34,7 @@ export default {
       }
       const res = await QnaApi.replyQnA(data)
       this.content = null
-      // alert(res.message)
+      alert(res.message)
       this.$emit('add-reply', res.data)
     }
   }

@@ -9,7 +9,7 @@
       <div>{{ data.addDate.slice(0, 8) }}</div>
       <div>{{ data.viewCnt }}</div>
     </div>
-    <QnADetail v-if="drawer" :data="detail"/>
+    <QnADetail v-if="drawer" :data="detail" @update-reply="updateReply"/>
   </div>
 </template>
 
@@ -38,6 +38,12 @@ export default {
         this.detail = {...res.data}
       }
       this.drawer = !this.drawer
+    },
+    updateReply: async function () {
+      const res = await QnaApi.requestQnaDetail(this.data.id)
+      this.detail = {...res.data}
+      this.$emit('update-reply')
+      this.drawer = false
     }
   }
 }

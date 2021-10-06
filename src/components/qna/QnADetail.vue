@@ -10,9 +10,9 @@
       </div>
     </div>
 
-    <ReplyQnA :qnaId="data.question.id" @add-reply="addReply"/>
+    <ReplyQnA :qnaId="data.question.id" @add-reply="updateReply"/>
 
-    <AnswerItem v-for="(reply, idx) in replies" :data="reply" :key="idx"/>
+    <AnswerItem v-for="(reply, idx) in replies" :data="reply" :key="idx" @delete-reply="updateReply"/>
     
   </div>
 </template>
@@ -38,8 +38,8 @@ export default {
     }
   },
   methods: {
-    addReply: function (e) {
-      this.replies.push(e)
+    updateReply: function () {
+      this.$emit('update-reply')
     }
   },
 }

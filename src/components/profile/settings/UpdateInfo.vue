@@ -5,22 +5,24 @@
     <form>
       <div class="nickname">
         <label for="nickname">닉네임</label>
-        <input type="text" id="nickname">
+        <input type="text" id="nickname" v-model="credentials.nickname">
       </div>
       <div class="gender">
         <label>성별</label>
-        <GenderRadioBtn :value="gender" @input="changeGender"/>
+        <GenderRadioBtn v-model="credentials.gender" @input="changeGender"/>
       </div>
       <div class="age">
         <label for="age">나이</label>
-        <input type="number" id="age" max="99" min="1" maxlength="2" @input="maxLengthCheck">
+        <input type="number" id="age" max="99" min="1" maxlength="2" @input="maxLengthCheck" v-model="credentials.age">
       </div>
     </form>
-    <button class="btn btn-success" style="width: 130px;">Update info</button>
+    <button class="btn btn-success" style="width: 130px;" :disabled="!credentials.nickname || isChange" @click="updateInfo">Update info</button>
   </div>
 </template>
 
 <script>
+import UserApi from "@/apis/UserApi.js";
+
 import GenderRadioBtn from "../GenderRadioBtn.vue"
 
 export default {
@@ -30,18 +32,40 @@ export default {
   },
   data: function () {
     return {
-      gender: true
+      credentials: {
+        nickname: null,
+        age: null,
+        gender: null,
+      }
     }
   },
   methods: {
     changeGender: function (data) {
-      this.gender = data
+      this.credentials.gender = data
     },
     maxLengthCheck: function (object) {
       if (object.target.value.length > object.target.maxLength){
         object.target.value = object.target.value.slice(0, object.target.maxLength);
       }  
+    },
+    updateInfo: async function () {
+      const response = await UserApi.updateUserInfo(this.credentials)
+      alert(response.data.message)
+      localStorage.setItem('nickname', this.credentials.nickname)
+      this.$router.push({ name: "Profile", params: { nickname: this.credentials.nickname }})
+    },
+  },
+  computed: {
+    isChange: function () {
+      const nickname = localStorage.getItem('nickname')
+      return nickname === this.credentials.nickname ? true : false
     }
+  },
+  created: async function () {
+    const nickname = localStorage.getItem('nickname')
+    const response = await UserApi.requestUserInfo(nickname)
+    this.credentials = {...response.data.data}
+    console.log(this.credentials)
   }
 }
 </script>

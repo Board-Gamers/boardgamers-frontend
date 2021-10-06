@@ -42,7 +42,11 @@ export default {
     },
     goLogout() {
       localStorage.clear();
-      this.$router.go();
+      if (this.$route.name === "Profile") {
+        this.$router.push({ name: "Main" })
+      } else {
+        this.$router.go();
+      }
     },
     openTab() {
       const tab = this.$el.querySelector('.tab')
