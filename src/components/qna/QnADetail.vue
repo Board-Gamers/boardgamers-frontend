@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <ReplyQnA :qnaId="data.question.id" @add-reply="updateReply"/>
+    <ReplyQnA v-if="$store.state.isAdmin" :qnaId="data.question.id" @add-reply="updateReply"/>
 
     <AnswerItem v-for="(reply, idx) in replies" :data="reply" :key="idx" @delete-reply="updateReply"/>
     

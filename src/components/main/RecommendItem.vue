@@ -5,8 +5,8 @@
       <img :src="game.thumbnail" alt="front-img" class="front-img">
     </div>
     <div class="content">
-      <h5 v-if="game.nameKor">{{ game.nameKor }}</h5>
-      <h5 v-else>{{ game.name }}</h5>
+      <h6 v-if="game.nameKor">{{ game.nameKor }}</h6>
+      <h6 v-else>{{ game.name }}</h6>
       <p>
         <span v-if="game.category.length > 2">{{ game.category | category }} </span>
         <img v-if="game.minAge >= 18" src="@/assets/images/age/18.png" alt="18">
@@ -68,7 +68,7 @@ export default {
   border-radius: 5px;
   display: flex;
   align-items: center;
-  padding: 3% 10px;
+  padding: 20px 10px;
   transition: 0.25s;
 }
 
@@ -106,7 +106,7 @@ export default {
   align-items: center;
 }
 
-.content h5 {
+.content h6 {
   font-weight: bold;
 }
 
@@ -123,6 +123,7 @@ export default {
 .content > p:last-child {
   color: rgba(0, 0, 0, 0.7);
   cursor: pointer;
+  margin: 0;
 }
 
 .content > p:last-child:hover {
@@ -140,7 +141,7 @@ export default {
 @media screen and (max-width: 991px) {
   .recommend-item {
     flex-direction: column;
-    padding: 20px 0 0;
+    padding: 20px 0;
     gap: 20px 0;
   }
   
@@ -151,6 +152,10 @@ export default {
 
   .content {
     width: 100%;
+  }
+
+  p {
+    font-size: 14px;
   }
 }
 </style>

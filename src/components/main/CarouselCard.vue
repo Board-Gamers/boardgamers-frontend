@@ -10,7 +10,11 @@
     </div>
 
     <div v-if="games.length" class="card-body">
-      <div v-for="(game, idx) in games" :key="idx" @click="selectGame(idx)"><span>{{ idx+1 }}</span>{{ game.nameKor }}</div>
+      <div v-for="(game, idx) in games" :key="idx" @click="selectGame(idx)">
+        <span>{{ idx+1 }}</span>
+        <span v-if="game.nameKor">{{ game.nameKor }}</span>
+        <span v-else>{{ game.name }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -149,21 +153,44 @@ button {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding: 0.5rem 1rem;
 }
 
 .card-body > div {
   cursor: pointer;
 }
 
-.card-body span {
+.card-body span:first-child {
   color: gray;
   margin-right: 10px;
-  font-size: 1.2em;
+  font-size: 16px;
+}
+
+.card-body span {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 767px) {
+  .card-body span:first-child {
+    font-size: 14px;
+  }
+  
+  .card-body span {
+    font-size: 12px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
 }
 
 @media screen and (max-width: 575px) {
   .carousel-card {
     width: 49%;
+  }
+
+  .card-body span {
+    font-size: 14px;
   }
 }
 

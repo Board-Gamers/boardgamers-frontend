@@ -1,9 +1,6 @@
 <template>
   <div class="my-reviews">
     <h1>리뷰</h1>
-
-    <br>
-    
     <div class="table-header">
       <div>평점</div>
       <div>내용</div>
@@ -11,13 +8,18 @@
       <div>작성일</div>
     </div>
 
-    <div v-if="list">
-      <ReviewItems v-for="(review, idx) in list" :key="idx" :review="review"/>
+    <div v-if="reviews">
+      <ReviewItems v-for="(review, idx) in reviews.reviews" :key="idx" :review="review"/>
     </div>
 
     <br>
-
-    <Pagination class="d-flex justify-content-center"/>
+    <Pagination 
+      v-if="reviews" 
+      :start="reviews.nowPage-1" 
+      :size="reviews.totalPage" 
+      @change="changeIndex" 
+      class="d-flex justify-content-center" 
+    />
   </div>
 </template>
 
@@ -35,13 +37,21 @@ export default {
   },
   data: function () {
     return {
-      list: null
+      reviews: null
     }
   },
+  methods: {
+    changeIndex: async function (idx) {
+      this.reviews = await this.updateUserReview(idx+1)
+    },
+    updateReviews: async function (idx) {
+      const nickname = this.$route.params.nickname
+      const data = { nickname, index: idx }
+      return await UserApi.requestUserReview(data)
+    },
+  },
   mounted: async function () {
-    const nickname = this.$route.params.nickname
-    const response = await UserApi.requestUserReview(nickname)
-    this.list = [...response.list]
+    this.reviews = await this.updateReviews(1)
   }
 }
 </script>

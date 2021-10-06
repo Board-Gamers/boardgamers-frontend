@@ -1,34 +1,46 @@
 <template>
   <div class="game card">
     <div class="game-img">
-      <img src="@/assets/main/1.png" alt="side-img">
-      <img src="@/assets/main/1.png" alt="front-img">
+      <img :src="game.thumbnail" alt="side-img">
+      <img :src="game.thumbnail" alt="front-img">
     </div>
-    <h5 class="card-title">스플랜더</h5>
+    <h5 v-if="game.gameNameKor" class="card-title" @click="goToDetail">{{ game.gameNameKor }}</h5>
+    <h5 v-else class="card-title" @click="goToDetail">{{ game.gameName }}</h5>
   </div>
 </template>
 
 <script>
 export default {
-  name: "GameItems"
+  name: "GameItems",
+  props: {
+    game: {
+      type: Object
+    }
+  },
+  methods: {
+    goToDetail: function () {
+      this.$router.push({ name: 'BoardGameDetail', params: { id: this.game.gameId }})
+    }
+  }
 }
 </script>
 
 <style scoped>
 .game {
-  padding: 10% 5% 5%;
+  padding: 5%;
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   text-align: center;
   position: relative;
 }
 
 .game-img {
-  height: auto;
+  height: 70%;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   transform: perspective(500px);
   transform-style: preserve-3d;
 }
@@ -50,6 +62,10 @@ export default {
 .card-title {
   margin: 5% 0 0;
   font-weight: bold;
+}
+
+h5 {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 575px) {

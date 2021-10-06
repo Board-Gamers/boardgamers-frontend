@@ -22,6 +22,7 @@ const requestLogin = (data, callback, errorCallback) => {
       localStorage.setItem("nickname", res.data.nickname);
       localStorage.setItem("jwt", res.headers.authorization);
       localStorage.setItem("id", data.loginId);
+      store.state.isAdmin = res.data.isAdmin;
       store.state.headers.Authorization = res.headers.authorization;
       callback(res.data.nickname);
     })
@@ -59,8 +60,18 @@ const updateUserInfo = (data, callback, errorCallback) => {
 const requestUserReview = async function(data, callback, errorCallback) {
   const response = await axios({
     method: "GET",
-    url: baseUrl + `/user/${data}`,
-    params: { type: "review" },
+    url: baseUrl + `/user/${data.nickname}`,
+    params: { page: data.index, type: "review" },
+  });
+  return response.data.data;
+};
+
+// 즐겨찾기 게임 받아오기
+const requestFavorite = async function(data, callback, errorCallback) {
+  const response = await axios({
+    method: "GET",
+    url: baseUrl + `/user/${data.nickname}`,
+    params: { page: data.index, pageSize: 12, type: "favorite" },
   });
   return response.data.data;
 };
@@ -78,6 +89,8 @@ const UserApi = {
     updateUserInfo(data, callback, errorCallback),
   requestUserReview: (data, callback, errorCallback) =>
     requestUserReview(data, callback, errorCallback),
+  requestFavorite: (data, callback, errorCallback) =>
+    requestFavorite(data, callback, errorCallback),
 };
 
 export default UserApi;

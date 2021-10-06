@@ -2,15 +2,19 @@
   <section v-if="games">
     <h1>Recommend</h1>
     <ul class="tab">
-      <li @click="showRankRec" class="active">평점 높은 순</li>
+      <li @click="showRankRec" class="active">인기 게임</li>
       <li @click="showReviewRec">리뷰 많은 순</li>
       <li>준비중</li>
-      <li>준비중</li>
+      <li v-if="isLogin" @click="showUserRec">유저 기반 추천</li>
+      <li v-else class="disabled">유저 기반 추천</li>
     </ul>
-    <div class="recommend-list">
+    <div v-if="title === 'user' && isLogin" class="recommend-list">
+      <RecommendItem v-for="(game, idx) in games" :key="idx" :game="game"/>
+    </div>
+    <div v-else class="recommend-list">
       <RecommendItem v-for="(game, idx) in games.games" :key="idx" :game="game"/>
     </div>
-    <Pagination :start="games.nowPage" @change="changeIndex"/>
+    <Pagination v-if="title !== 'user'" :start="games.nowPage" @change="changeIndex"/>
   </section>
 </template>
 
@@ -29,6 +33,7 @@ export default {
   data: function () {
     return {
       title: 'rank',
+      isLogin: false,
     }
   },
   methods: {
@@ -41,12 +46,19 @@ export default {
     updateReviewRec: async function (idx) {
       this.$store.state.recommend.review = await RecApi.reviewRec(idx)
     },
+    updateUserRec: async function () {
+      this.$store.state.recommend.userBase = await RecApi.userRec()
+    },
     showRankRec: function (e) {
       this.title = 'rank'
       this.activeTab(e)
     },
     showReviewRec: function (e) {
       this.title = 'review'
+      this.activeTab(e)
+    },
+    showUserRec: function (e) {
+      this.title = 'user'
       this.activeTab(e)
     },
     activeTab: function (e) {
@@ -58,11 +70,19 @@ export default {
   },
   computed: {
     games: function () {
-      return this.title === 'rank' ? this.$store.state.recommend.rank : this.$store.state.recommend.review
+      if (this.title === 'rank') {
+        return this.$store.state.recommend.rank
+      } else if (this.title === 'review') {
+        return this.$store.state.recommend.review
+      } else if (this.title === 'user') {
+        return this.$store.state.recommend.userBase ?? []
+      }
     },
   },
   mounted: async function () {
-    Promise.all([this.updateRankRec(), this.updateReviewRec()])
+    const token = localStorage.getItem('jwt')
+    this.isLogin = token ? true : false
+    Promise.all([this.updateRankRec(), this.updateReviewRec(), this.updateUserRec()])
   }
 }
 </script>
@@ -106,7 +126,7 @@ ul li {
   cursor: pointer;
 }
 
-ul :is(li:nth-child(1), li:nth-child(2)):hover {
+ul li:hover {
   transform: translateY(0);
 }
 
@@ -115,6 +135,10 @@ ul li.active {
   border-bottom: 1px solid #fff;
   transform: translateY(0);
   background-color: #fff;
+}
+
+ul li.disabled:hover {
+  transform: translateY(50%);
 }
 
 .recommend-list {
@@ -136,6 +160,11 @@ ul li.active {
 @media screen and (max-width: 575px) {
   .recommend-list {
     grid-template-columns: repeat(2, auto);
+  }
+
+  ul li {
+    font-size: 12px;
+    padding: 10px 0;
   }
 }
 </style>

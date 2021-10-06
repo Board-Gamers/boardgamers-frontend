@@ -1,8 +1,8 @@
 <template>
   <div class="pagination">
     <button class="prev-btn" :disabled="!index" @click="prevPage"><i class="fas fa-caret-left"></i></button>
-    <div v-for="n in 5" :key="n" @click="changePage(n)" class="number">{{ n }}</div>
-    <button class="next-btn" :disabled="index === 4" @click="nextPage"><i class="fas fa-caret-right"></i></button>
+    <div v-for="n in size" :key="n" @click="changePage(n)" class="number">{{ n }}</div>
+    <button class="next-btn" :disabled="index === size-1" @click="nextPage"><i class="fas fa-caret-right"></i></button>
   </div>
 </template>
 
@@ -13,6 +13,10 @@ export default {
     start: {
       type: Number,
       default: 0
+    },
+    size: {
+      type: Number,
+      default: 5
     }
   },
   data: function () {
@@ -58,8 +62,10 @@ export default {
     }
   },
   mounted: function () {
-    const start = this.$el.querySelectorAll('.number')[this.index]
-    start.classList.add('active')
+    setTimeout(() => {
+      const start = this.$el.querySelectorAll('.number')[this.index]
+      start.classList.add('active')
+    }, 100);
   },
 }
 </script>

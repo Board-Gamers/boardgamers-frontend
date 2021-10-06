@@ -38,7 +38,9 @@ export default {
     },
     goProfile() {
       const nickname = localStorage.getItem('nickname')
-      this.$router.push({ name: "Profile", params: { nickname: nickname } });
+      if (this.$route.params.nickname !== nickname) {
+        this.$router.push({ name: "Profile", params: { nickname: nickname } });
+      }
     },
     goLogout() {
       localStorage.clear();

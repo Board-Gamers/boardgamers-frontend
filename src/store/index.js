@@ -12,9 +12,12 @@ export default new Vuex.Store({
     recommend: {
       rank: null,
       review: null,
+      userBase: null,
       topRank: null,
       topReview: null,
+      topUserBase: null,
     },
+    isAdmin: false,
   },
   mutations: {
     GET_BOARDGAME_INFO(state, data) {

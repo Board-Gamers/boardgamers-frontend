@@ -50,7 +50,7 @@ export default {
     },
     updateInfo: async function () {
       const response = await UserApi.updateUserInfo(this.credentials)
-      alert(response.data.message)
+      swal(response.data.message)
       localStorage.setItem('nickname', this.credentials.nickname)
       this.$router.push({ name: "Profile", params: { nickname: this.credentials.nickname }})
     },
@@ -65,7 +65,6 @@ export default {
     const nickname = localStorage.getItem('nickname')
     const response = await UserApi.requestUserInfo(nickname)
     this.credentials = {...response.data.data}
-    console.log(this.credentials)
   }
 }
 </script>

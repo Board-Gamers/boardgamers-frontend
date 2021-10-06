@@ -3,7 +3,8 @@
     <div class="bg">
       <img :src="mainBanner.image" alt="banner-img" class="bg-img">
     </div>  
-    <h1 class="fw-bold my-0">{{ mainBanner.nameKor }}</h1>
+    <h1 v-if="mainBanner.nameKor" class="fw-bold my-0">{{ mainBanner.nameKor }}</h1>
+    <h1 v-else class="fw-bold my-0">{{ mainBanner.name }}</h1>
     <div>
       <h6 v-if="mainBanner.category.length > 2">장르 : {{ mainBanner.category | categoryTruncate }}</h6>
       <h6>평점 : <Rating :value="mainBanner.averageRate" color="#fff"/> {{ mainBanner.averageRate | rateTruncate }}점</h6>
@@ -126,6 +127,15 @@ h5, p {
 @media screen and (max-width: 575px){
   .main-banner {
     font-size: 12px;
+    min-height: 200px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  h6 {
+    font-size: 14px;
   }
 }
 

@@ -36,7 +36,7 @@ export default {
   methods: {
     uploadBoard: async function () {
       const response = await QnaApi.uploadBoard(this.$data)
-      alert(response.data.message)
+      swal(response.data.message)
       this.title = null
       this.content = null
       this.$emit('upload-board')

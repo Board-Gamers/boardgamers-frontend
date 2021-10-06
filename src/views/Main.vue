@@ -7,14 +7,15 @@
 
     <br>
     <div class="card-list">
-      <CarouselCard v-if="rankGames.length" :games="rankGames" title="평점 높은 순" />
+      <CarouselCard v-if="rankGames.length" :games="rankGames" title="인기 게임" />
       <div v-else class="loading">로딩중</div>
       <CarouselCard v-if="reviewGames.length" :games="reviewGames" title="리뷰 많은 순" />
       <div v-else class="loading">로딩중</div>
       <div class="loading">준비중</div>
-      <div class="loading">준비중</div>
+      <div v-if="!isLogin" class="loading">로그인을 해주세요</div>
+      <CarouselCard v-else-if="userGames.length" :games="userGames" title="유저 기반 추천"/>
+      <div v-else class="loading">리뷰를 남겨 주세요<br>(매일 00:00에 갱신됩니다.)</div>
       <!-- <CarouselCard title="유저 추천 순"/> -->
-      <!-- <CarouselCard title="비슷한 게임"/> -->
     </div>
 
     <RecommendList />
@@ -38,6 +39,11 @@ export default {
     CarouselCard,
     RecommendList,
   },
+  data: function () {
+    return {
+      isLogin: false
+    }
+  },
   methods: {
     getRankRec: async function () {
       if (this.$store.state.recommend.rank) {
@@ -57,6 +63,15 @@ export default {
         return response
       }
     },
+    getUserRec: async function () {
+      if (this.$store.state.recommend.userBase) {
+        return this.$store.state.recommend.userBase
+      } else {
+        const response = await RecApi.userRec()
+        this.$store.state.recommend.topUserBase = response.slice(0, 5)
+        return response
+      }
+    }
   },
   computed: {
     rankGames: function () {
@@ -65,13 +80,23 @@ export default {
     reviewGames: function () {
       return this.$store.state.recommend.topReview?.games.slice(0, 5) ?? []
     },
+    userGames: function () {
+      return this.$store.state.recommend.topUserBase ?? []
+    },
     bannerGames: function () {
-      return [...this.rankGames, ...this.reviewGames]
+      return [...this.rankGames, ...this.reviewGames, ...this.userGames]
     }
   },
   mounted: async function () {
-    const response = await Promise.all([this.getRankRec(), this.getReviewRec()])
-    this.$store.state.recommend = { ...this.$store.state.recommend, rank: response[0], review: response[1]}
+    const token = localStorage.getItem('jwt')
+    this.isLogin = token ? true : false
+    const response = await Promise.all([this.getRankRec(), this.getReviewRec(), this.getUserRec()])
+    this.$store.state.recommend = { 
+      ...this.$store.state.recommend, 
+      rank: response[0], 
+      review: response[1],
+      userBase: response[2]
+    }
   }
 }
 </script>

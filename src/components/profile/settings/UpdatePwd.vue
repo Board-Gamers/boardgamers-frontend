@@ -46,12 +46,15 @@ export default {
       }
       UserApi.updatePassword(data)
       .then(res => {
-        alert(res.data.message)
+        swal(res.data.message)
         this.credentials = {password: null, newPassword: null}
         this.passwordConfirmation = null
       })
       .catch(err => {
-        alert('비밀번호를 다시 한번 확인해 주세요.')
+        swal({
+          text: '비밀번호를 다시 한번 확인해 주세요.',
+          icon: "error"
+        })
         this.credentials = {password: null, newPassword: null}
         this.passwordConfirmation = null
       })

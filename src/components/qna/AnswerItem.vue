@@ -5,7 +5,7 @@
       <div>{{ data.content }}</div>
       <div>
         <span>{{ data.addDate }}</span>
-        <button @click="deleteReply"><i class="fas fa-trash-alt"></i></button>
+        <button v-if="$store.state.isAdmin" @click="deleteReply"><i class="fas fa-trash-alt"></i></button>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
     deleteReply: async function () {
       const data = { id: this.data.id }
       const res = await QnaApi.deleteReply(data)
-      alert(res.data.message)
+      swal(res.data.message)
       this.$emit('delete-reply')
     }
   }

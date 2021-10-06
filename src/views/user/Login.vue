@@ -51,7 +51,7 @@ export default {
             };
 
             UserApi.requestLogin(data, (nick) => {
-                alert(nick + "님 반갑습니다");
+                swal(nick + "님 반갑습니다");
                 this.$router.push({ name: "Main" });
             });
         },

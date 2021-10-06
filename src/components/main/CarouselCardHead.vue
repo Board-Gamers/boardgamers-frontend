@@ -2,7 +2,8 @@
   <div class="card-head">
     <img :src="game.thumbnail" class="card-bg-img" alt="bg-image">
     <img :src="game.thumbnail" class="card-head-img" alt="game-image">
-    <h6 @click="goToDetail">{{ game.nameKor }}</h6>
+    <h6 @click="goToDetail" v-if="game.nameKor">{{ game.nameKor }}</h6>
+    <h6 @click="goToDetail" v-else>{{ game.name }}</h6>
   </div>
 </template>
 
@@ -79,4 +80,9 @@ h6:hover {
   opacity: 1;
 }
 
+@media screen and (max-width: 767px) {
+  h6 {
+    font-size: 14px;
+  }
+}
 </style>
