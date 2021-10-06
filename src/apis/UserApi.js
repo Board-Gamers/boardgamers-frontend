@@ -8,6 +8,7 @@ const requestSignUp = (data, callback, errorCallback) => {
     .post(baseUrl + `/user/signup`, data)
     .then((res) => {
       alert(res.data.message);
+      callback();
     })
     .catch((e) => {
       //window.swal(e.response.data.message + "!");
