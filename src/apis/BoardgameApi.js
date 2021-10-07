@@ -27,6 +27,8 @@ const requestWriteReview = (data, callback, errorCallback) => {
         .post(baseUrl + `/review`, data)
         .then((res) => {
             callback();
+            let userId = localStorage.getItem("userId");
+            axios.post(`http://j5a404.p.ssafy.io:8082/boardgamerec/update/gd/${userId}`);
         })
         .catch((e) => {
             //window.swal(e.response.data.message + "!");
