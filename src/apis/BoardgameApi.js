@@ -102,8 +102,8 @@ const likeAnswer = (data, callback, errorCallback) => {
     method: "POST",
     url: baseUrl + "/game/qna/like",
     headers: store.state.headers,
-    params: { answerId: data },
-    data: { isLiked: true },
+    params: { answerId: data.id },
+    data: { isLiked: data.likes },
   });
 };
 
