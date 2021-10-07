@@ -24,7 +24,9 @@ const requestGameReview = (id, callback, errorCallback) => {
 // 보드게임 리뷰 작성하기
 const requestWriteReview = (data, callback, errorCallback) => {
     axios
-        .post(baseUrl + `/review`, data)
+        .post(baseUrl + `/review`, data, {
+            headers: { Authorization: localStorage.getItem("jwt") },
+        })
         .then((res) => {
             callback();
             let userId = localStorage.getItem("userId");
@@ -41,7 +43,9 @@ const requestWriteReview = (data, callback, errorCallback) => {
 
 // 보드게임 리뷰 삭제하기
 const requestDeleteReview = (id, callback, errorCallback) => {
-    return axios.delete(baseUrl + `/review?id=${id}`);
+    return axios.delete(baseUrl + `/review?id=${id}`, {
+        headers: { Authorization: localStorage.getItem("jwt") },
+    });
 };
 
 // 보드게임 질문 가져오기
@@ -56,7 +60,9 @@ const requestGameQuestionReply = (id, callback, errorCallback) => {
 // 보드게임 질문 작성하기
 const requestGameWriteQuestion = (data, callback, errorCallback) => {
     axios
-        .post(baseUrl + `/game/qna`, data)
+        .post(baseUrl + `/game/qna`, data, {
+            headers: { Authorization: localStorage.getItem("jwt") },
+        })
         .then((res) => {
             callback();
         })
@@ -67,13 +73,17 @@ const requestGameWriteQuestion = (data, callback, errorCallback) => {
 
 // 보드게임 질문 삭제하기
 const requestDeleteQna = (id, callback, errorCallback) => {
-    return axios.delete(baseUrl + `/game/qna/${id}`);
+    return axios.delete(baseUrl + `/game/qna/${id}`, {
+        headers: { Authorization: localStorage.getItem("jwt") },
+    });
 };
 
 // 보드게임 질문 답변 작성하기
 const requestGameQuestionWriteReply = (data, callback, errorCallback) => {
     axios
-        .post(baseUrl + `/game/qna/${data.gameId}`, data.content)
+        .post(baseUrl + `/game/qna/${data.gameId}`, data.content, {
+            headers: { Authorization: localStorage.getItem("jwt") },
+        })
         .then((res) => {
             callback();
         })
@@ -85,7 +95,9 @@ const requestGameQuestionWriteReply = (data, callback, errorCallback) => {
 // 보드게임 질문 답변 작성하기
 const requestGameBookmark = (data, callback, errorCallback) => {
     axios
-        .post(baseUrl + `/game/favorite?gameId=${data}`)
+        .post(baseUrl + `/game/favorite?gameId=${data}`, {
+            headers: { Authorization: localStorage.getItem("jwt") },
+        })
         .then((res) => {
             callback();
         })

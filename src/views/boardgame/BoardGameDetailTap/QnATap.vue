@@ -84,12 +84,8 @@
 
 <script>
 import BoardgameApi from "@/apis/BoardgameApi.js";
-import QnATapReply from "./QnATapReply.vue";
 
 export default {
-    components: {
-        QnATapReply,
-    },
     props: {
         ele: Object,
     },
