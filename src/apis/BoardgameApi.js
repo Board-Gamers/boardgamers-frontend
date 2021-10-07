@@ -28,7 +28,11 @@ const requestWriteReview = (data, callback, errorCallback) => {
         .then((res) => {
             callback();
             let userId = localStorage.getItem("userId");
-            axios.post(`http://j5a404.p.ssafy.io:8082/boardgamerec/update/gd/${userId}`);
+            axios.post(`http://j5a404.p.ssafy.io:8082/boardgamerec/update/gd/${userId}`).then(() => {
+                swal("추천 결과를 갱신했습니다.").then(() => {
+                    this.$router.go();
+                });
+            });
         })
         .catch((e) => {
             //window.swal(e.response.data.message + "!");

@@ -103,7 +103,7 @@ export default {
 
             BoardgameApi.requestWriteReview(data, () => {
                 swal("리뷰를 작성했습니다").then(() => {
-                    this.$router.go();
+                    //this.$router.go();
                 });
             });
         },
