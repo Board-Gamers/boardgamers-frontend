@@ -4,7 +4,6 @@
       <div class="logo-btn fs-1 text-black btn fw-bold d-flex align-items-center" v-on:click="goMain">
         <!-- <i class="fas fa-dice"></i> -->
         <img src="@/assets/images/dice.png" alt="dice" class="dice">
-        <span>Boardgamers</span>
       </div>
       <div class="hamburger btn" @click="openTab"><i class="fas fa-bars"></i></div>
     </div>
@@ -91,8 +90,7 @@ export default {
 }
 
 .dice {
-  width: 50px;
-  margin-right: 14px;
+  height: 60px
 }
 @media screen and (max-width: 767px) {
   .navigation {
@@ -120,8 +118,7 @@ export default {
   }
 
   .dice {
-    width: 40px;
-    margin-right: 8px;
+    height: 50px;
   }
 }
 </style>
