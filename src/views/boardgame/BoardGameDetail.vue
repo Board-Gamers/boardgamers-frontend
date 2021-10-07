@@ -26,7 +26,8 @@
                             <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 시간&nbsp;&nbsp;</span>{{ info.minPlayTime }}분</div>
                             <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 연령&nbsp;&nbsp;</span>{{ info.minAge }}세 이상</div>
                             <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 순위&nbsp;&nbsp;</span>{{ info.rank }}위</div>
-                            <button class="btn btn-primary mt-1" v-on:click="addBookmark">즐겨찾기</button>
+                            <button class="btn btn-primary mt-1" v-on:click="addBookmark(1)" v-if="!isBooked">즐겨찾기</button>
+                            <button class="btn btn-outline-primary mt-1" v-on:click="addBookmark(2)" v-else>즐겨찾기 해제</button>
                         </div>
                     </div>
                     <div class="row">
@@ -140,6 +141,7 @@ export default {
         let id = this.$route.params.id;
         BoardgameApi.requestGameInfo(id).then((res) => {
             this.info = res.data.data;
+            this.isBooked = this.info.saved;
             let name = this.info.nameKor ? this.info.nameKor : this.info.name;
             // YoutubeApi.requestYoutube(name).then((res) => {
             //     this.videoid = "https://www.youtube.com/embed/" + res.data.items[0].id.videoId;
@@ -179,11 +181,19 @@ export default {
                 });
             });
         },
-        addBookmark() {
+        addBookmark(num) {
             let id = this.$route.params.id;
-            BoardgameApi.requestGameBookmark(id, () => {
-                swal("즐겨찾기에 추가했습니다.");
-            });
+            if (num == 1) {
+                BoardgameApi.requestGameBookmark(id, () => {
+                    swal("즐겨찾기에 추가합니다.");
+                });
+            }
+            if (num == 2) {
+                BoardgameApi.requestGameBookmark(id, () => {
+                    swal("즐겨찾기를 해제합니다.");
+                });
+            }
+            this.isBooked = !this.isBooked;
         },
     },
     data() {
@@ -193,6 +203,7 @@ export default {
             qna: [],
             question: "",
             videoid: "",
+            isBooked: false,
         };
     },
 };

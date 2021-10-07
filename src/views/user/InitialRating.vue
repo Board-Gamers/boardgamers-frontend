@@ -466,8 +466,9 @@ export default {
                 };
                 BoardgameApi.requestWriteReview(data);
             }
-            swal("평가를 남겨주셔서 감사합니다.");
-            this.$router.push("/");
+            swal("평가를 남겨주셔서 감사합니다.").then(() => {
+                this.$router.push("/");
+            });
         },
     },
 };
