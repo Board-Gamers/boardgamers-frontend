@@ -68,7 +68,10 @@ export default {
 
             if (!data.id || !data.nickname || !data.password) return;
 
-            if (data.password !== this.passwordConfirm) alert("비밀번호가 다릅니다!");
+            if (data.password !== this.passwordConfirm) {
+                swal("비밀번호가 다릅니다!");
+                return;
+            }
 
             UserApi.requestSignUp(data, () => {
                 let logdata = {
@@ -79,7 +82,7 @@ export default {
                     this.$router.push({ name: "Rating" });
                 });
             });
-            // alert(`
+            // swal(`
             //     email: ${this.email},
             //     certi: ${this.certi},
             //     pass: ${this.password},

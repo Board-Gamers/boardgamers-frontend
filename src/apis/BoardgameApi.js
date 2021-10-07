@@ -59,15 +59,34 @@ const requestGameWriteQuestion = (data, callback, errorCallback) => {
         });
 };
 
+// 보드게임 질문 삭제하기
+const requestDeleteQna = (id, callback, errorCallback) => {
+    return axios.delete(baseUrl + `/game/qna/${id}`);
+};
+
+// 보드게임 질문 답변 작성하기
+const requestGameQuestionWriteReply = (data, callback, errorCallback) => {
+    axios
+        .post(baseUrl + `/game/qna/${data.gameId}`, data.content)
+        .then((res) => {
+            callback();
+        })
+        .catch((e) => {
+            //window.swal(e.response.data.message + "!");
+        });
+};
+
 const BoardgameApi = {
     requestGameInfo: (data, callback, errorCallback) => requestGameInfo(data, callback, errorCallback),
     requestGameSearch: (data, callback, errorCallback) => requestGameSearch(data, callback, errorCallback),
     requestGameReview: (data, callback, errorCallback) => requestGameReview(data, callback, errorCallback),
     requestWriteReview: (data, callback, errorCallback) => requestWriteReview(data, callback, errorCallback),
     requestDeleteReview: (data, callback, errorCallback) => requestDeleteReview(data, callback, errorCallback),
+    requestDeleteQna: (data, callback, errorCallback) => requestDeleteQna(data, callback, errorCallback),
     requestGameQuestion: (data, callback, errorCallback) => requestGameQuestion(data, callback, errorCallback),
     requestGameQuestionReply: (data, callback, errorCallback) => requestGameQuestionReply(data, callback, errorCallback),
     requestGameWriteQuestion: (data, callback, errorCallback) => requestGameWriteQuestion(data, callback, errorCallback),
+    requestGameQuestionWriteReply: (data, callback, errorCallback) => requestGameQuestionWriteReply(data, callback, errorCallback),
 };
 
 export default BoardgameApi;
