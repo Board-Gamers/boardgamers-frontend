@@ -143,9 +143,9 @@ export default {
             this.info = res.data.data;
             this.isBooked = this.info.saved;
             let name = this.info.nameKor ? this.info.nameKor : this.info.name;
-            // YoutubeApi.requestYoutube(name).then((res) => {
-            //     this.videoid = "https://www.youtube.com/embed/" + res.data.items[0].id.videoId;
-            // });
+            YoutubeApi.requestYoutube(name).then((res) => {
+                this.videoid = "https://www.youtube.com/embed/" + res.data.items[0].id.videoId;
+            });
         });
 
         // console.log(this.$store.getters.getBoardgameinfo);

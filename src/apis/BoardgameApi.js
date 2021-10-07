@@ -13,7 +13,9 @@ const requestGameSearch = (data, callback, errorCallback) => {
 
 // 보드게임 정보 가져오기
 const requestGameInfo = (id, callback, errorCallback) => {
-    return axios.get(baseUrl + `/game/${id}`);
+    return axios.get(baseUrl + `/game/${id}`, {
+        headers: { Authorization: localStorage.getItem("jwt") },
+    });
 };
 
 // 보드게임 리뷰 가져오기
@@ -54,7 +56,9 @@ const requestGameQuestion = (id, callback, errorCallback) => {
 };
 // 보드게임 질문 답변 가져오기
 const requestGameQuestionReply = (id, callback, errorCallback) => {
-    return axios.get(baseUrl + `/game/qna?questionId=${id}`);
+    return axios.get(baseUrl + `/game/qna?questionId=${id}`, {
+        headers: { Authorization: localStorage.getItem("jwt") },
+    });
 };
 
 // 보드게임 질문 작성하기
@@ -92,18 +96,25 @@ const requestGameQuestionWriteReply = (data, callback, errorCallback) => {
         });
 };
 
-// 보드게임 질문 답변 작성하기
+// 보드게임 즐겨찾기하기
 const requestGameBookmark = (data, callback, errorCallback) => {
-    axios
-        .post(baseUrl + `/game/favorite?gameId=${data}`, {
-            headers: { Authorization: localStorage.getItem("jwt") },
-        })
-        .then((res) => {
-            callback();
-        })
-        .catch((e) => {
-            //window.swal(e.response.data.message + "!");
-        });
+    axios({
+        method: "POST",
+        url: baseUrl + `/game/favorite?gameId=${data}`,
+        headers: store.state.headers,
+    }).then((res) => {
+        callback();
+    });
+    // axios
+    //     .post(, {
+    //         headers: {  },
+    //     })
+    //     .then((res) => {
+    //         callback();
+    //     })
+    //     .catch((e) => {
+    //         //window.swal(e.response.data.message + "!");
+    //     });
 };
 
 // 게임 답변 좋아요
