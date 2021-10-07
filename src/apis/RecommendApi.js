@@ -21,6 +21,15 @@ const reviewRec = async function(data = 1, callback, errorCallback) {
   return response.data.data;
 };
 
+const rateRec = async function(data = 1, callback, errorCallback) {
+  const response = await axios({
+    method: "GET",
+    url: baseUrl + "/game/search",
+    params: { page: data, order: "rate", pageSize: 9 },
+  });
+  return response.data.data;
+};
+
 const userRec = async function(data, callback, errorCallback) {
   const response = await axios({
     method: "GET",
@@ -37,6 +46,8 @@ const RecApi = {
     reviewRec(data, callback, errorCallback),
   userRec: (data, callback, errorCallback) =>
     userRec(data, callback, errorCallback),
+  rateRec: (data, callback, errorCallback) =>
+    rateRec(data, callback, errorCallback),
 };
 
 export default RecApi;

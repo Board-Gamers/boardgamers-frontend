@@ -25,7 +25,10 @@ export default {
     deleteReply: async function () {
       const data = { id: this.data.id }
       const res = await QnaApi.deleteReply(data)
-      swal(res.data.message)
+      swal({
+        title: res.data.message,
+        icon: "success"
+      })
       this.$emit('delete-reply')
     }
   }

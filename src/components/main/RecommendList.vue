@@ -4,7 +4,7 @@
     <ul class="tab">
       <li @click="showRankRec" class="active">인기 게임</li>
       <li @click="showReviewRec">리뷰 많은 순</li>
-      <li>준비중</li>
+      <li @click="showRateRec">평균 평점 순</li>
       <li v-if="isLogin" @click="showUserRec">유저 기반 추천</li>
       <li v-else class="disabled">유저 기반 추천</li>
     </ul>
@@ -38,13 +38,22 @@ export default {
   },
   methods: {
     changeIndex: function (idx) {
-      this.title === 'rank' ? this.updateRankRec(idx+1) : this.updateReviewRec(idx+1)
+      if (this.title === 'rank') {
+        this.updateRankRec(idx+1)
+      } else if (this.title === 'review') {
+        this.updateReviewRec(idx+1)
+      } else {
+        this.updateRateRec(idx+1)
+      }
     },
     updateRankRec: async function (idx) {
       this.$store.state.recommend.rank = await RecApi.rankRec(idx)
     },
     updateReviewRec: async function (idx) {
       this.$store.state.recommend.review = await RecApi.reviewRec(idx)
+    },
+    updateRateRec: async function (idx) {
+      this.$store.state.recommend.rate = await RecApi.rateRec(idx)
     },
     updateUserRec: async function () {
       this.$store.state.recommend.userBase = await RecApi.userRec()
@@ -55,6 +64,10 @@ export default {
     },
     showReviewRec: function (e) {
       this.title = 'review'
+      this.activeTab(e)
+    },
+    showRateRec: function (e) {
+      this.title = 'rate'
       this.activeTab(e)
     },
     showUserRec: function (e) {
@@ -74,15 +87,17 @@ export default {
         return this.$store.state.recommend.rank
       } else if (this.title === 'review') {
         return this.$store.state.recommend.review
-      } else if (this.title === 'user') {
-        return this.$store.state.recommend.userBase ?? []
+      } else if (this.title === 'rate') {
+        return this.$store.state.recommend.rate
+      } else {
+        return this.$store.state.recommend.userBase?.slice(0, 12) ?? []
       }
     },
   },
   mounted: async function () {
     const token = localStorage.getItem('jwt')
-    this.isLogin = token ? true : false
-    Promise.all([this.updateRankRec(), this.updateReviewRec(), this.updateUserRec()])
+    this.isLogin = Boolean(token)
+    Promise.all([this.updateRankRec(), this.updateReviewRec(), this.updateRateRec(), this.updateUserRec()])
   }
 }
 </script>

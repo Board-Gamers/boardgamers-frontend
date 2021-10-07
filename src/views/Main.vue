@@ -11,11 +11,11 @@
       <div v-else class="loading">로딩중</div>
       <CarouselCard v-if="reviewGames.length" :games="reviewGames" title="리뷰 많은 순" />
       <div v-else class="loading">로딩중</div>
-      <div class="loading">준비중</div>
+      <CarouselCard v-if="rateGames.length" :games="rateGames" title="평균 평점 순"/>
+      <div v-else class="loading">로딩중</div>
       <div v-if="!isLogin" class="loading">로그인을 해주세요</div>
       <CarouselCard v-else-if="userGames.length" :games="userGames" title="유저 기반 추천"/>
       <div v-else class="loading">리뷰를 남겨 주세요<br>(매일 00:00에 갱신됩니다.)</div>
-      <!-- <CarouselCard title="유저 추천 순"/> -->
     </div>
 
     <RecommendList />
@@ -63,6 +63,15 @@ export default {
         return response
       }
     },
+    getRateRec: async function () {
+      if (this.$store.state.recommend.rate) {
+        return this.$store.state.recommend.rate
+      } else {
+        const response = await RecApi.rateRec()
+        this.$store.state.recommend.topRate = response
+        return response
+      }
+    },
     getUserRec: async function () {
       if (this.$store.state.recommend.userBase) {
         return this.$store.state.recommend.userBase
@@ -71,7 +80,7 @@ export default {
         this.$store.state.recommend.topUserBase = response.slice(0, 5)
         return response
       }
-    }
+    },
   },
   computed: {
     rankGames: function () {
@@ -80,22 +89,26 @@ export default {
     reviewGames: function () {
       return this.$store.state.recommend.topReview?.games.slice(0, 5) ?? []
     },
+    rateGames: function () {
+      return this.$store.state.recommend.topRate?.games.slice(0, 5) ?? []
+    },
     userGames: function () {
       return this.$store.state.recommend.topUserBase ?? []
     },
     bannerGames: function () {
-      return [...this.rankGames, ...this.reviewGames, ...this.userGames]
+      return [...this.rankGames, ...this.reviewGames, ...this.rateGames, ...this.userGames]
     }
   },
   mounted: async function () {
     const token = localStorage.getItem('jwt')
     this.isLogin = token ? true : false
-    const response = await Promise.all([this.getRankRec(), this.getReviewRec(), this.getUserRec()])
+    const response = await Promise.all([this.getRankRec(), this.getReviewRec(), this.getRateRec(), this.getUserRec()])
     this.$store.state.recommend = { 
       ...this.$store.state.recommend, 
       rank: response[0], 
       review: response[1],
-      userBase: response[2]
+      rate: response[2],
+      userBase: response[3]
     }
   }
 }
@@ -111,6 +124,7 @@ export default {
 
 .card-list {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

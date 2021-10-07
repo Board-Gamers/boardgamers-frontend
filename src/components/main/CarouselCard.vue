@@ -10,7 +10,7 @@
     </div>
 
     <div v-if="games.length" class="card-body">
-      <div v-for="(game, idx) in games" :key="idx" @click="selectGame(idx)">
+      <div v-for="(game, idx) in games" :key="idx" @click="selectGame(idx)" class="game-name">
         <span>{{ idx+1 }}</span>
         <span v-if="game.nameKor">{{ game.nameKor }}</span>
         <span v-else>{{ game.name }}</span>
@@ -128,7 +128,6 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .title {
@@ -152,8 +151,8 @@ button {
   font-weight: bold;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 0.5rem 1rem;
+  gap: 8px;
+  padding: 1rem 1rem;
 }
 
 .card-body > div {
@@ -162,23 +161,19 @@ button {
 
 .card-body span:first-child {
   color: gray;
-  margin-right: 10px;
-  font-size: 16px;
 }
 
 .card-body span {
   font-size: 14px;
 }
 
-@media screen and (max-width: 767px) {
-  .card-body span:first-child {
-    font-size: 14px;
-  }
-  
-  .card-body span {
-    font-size: 12px;
-  }
+.game-name {
+  display: grid;
+  grid-template-columns: 15px auto;
+  align-items: flex-start;
+}
 
+@media screen and (max-width: 767px) {
   .title {
     font-size: 16px;
   }
@@ -187,10 +182,6 @@ button {
 @media screen and (max-width: 575px) {
   .carousel-card {
     width: 49%;
-  }
-
-  .card-body span {
-    font-size: 14px;
   }
 }
 

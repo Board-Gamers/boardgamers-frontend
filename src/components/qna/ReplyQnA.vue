@@ -34,7 +34,10 @@ export default {
       }
       const res = await QnaApi.replyQnA(data)
       this.content = null
-      swal(res.message)
+      swal({
+        title: res.message,
+        icon: "success"
+      })
       this.$emit('add-reply', res.data)
     }
   }

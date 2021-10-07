@@ -466,7 +466,7 @@ export default {
                 };
                 BoardgameApi.requestWriteReview(data);
             }
-            alert("평가를 남겨주셔서 감사합니다.");
+            swal("평가를 남겨주셔서 감사합니다.");
             this.$router.push("/");
         },
     },

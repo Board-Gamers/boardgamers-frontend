@@ -13,10 +13,8 @@
 export default {
     name: "App",
     created: function () {
-        const token = localStorage.getItem('jwt')
-        if (token) {
-            this.$store.state.headers.Authorization = token
-        }
+        this.$store.state.headers.Authorization = localStorage.getItem('jwt')
+        this.$store.state.isAdmin = localStorage.getItem('admin')
     }
 }
 </script>

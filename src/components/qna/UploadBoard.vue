@@ -7,11 +7,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <label for="title">제목</label>
-          <input type="text" id="title" v-model="title">
-          <br>
-          <label for="content">내용</label>
-          <textarea id="content" rows="5" v-model="content"></textarea>
+          <div>
+            <label for="title">제목</label>
+            <input type="text" id="title" v-model="title">
+          </div>
+          <div>
+            <label for="content">내용</label>
+            <textarea id="content" rows="5" v-model="content"></textarea>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
@@ -48,6 +51,19 @@ export default {
 <style scoped>
 textarea, input {
   width: 100%;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  outline: unset;
+  padding: 5px 10px;
+}
 
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label {
+  font-weight: bold;
 }
 </style>

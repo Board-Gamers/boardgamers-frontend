@@ -23,6 +23,7 @@ const requestLogin = (data, callback, errorCallback) => {
       localStorage.setItem("nickname", res.data.nickname);
       localStorage.setItem("jwt", res.headers.authorization);
       localStorage.setItem("id", data.loginId);
+      localStorage.setItem("admin", res.data.isAdmin);
       store.state.isAdmin = res.data.isAdmin;
       store.state.headers.Authorization = res.headers.authorization;
       callback(res.data.nickname);
@@ -35,6 +36,16 @@ const requestLogin = (data, callback, errorCallback) => {
 // 회원정보
 const requestUserInfo = (data, callback, errorCallback) => {
   return axios.get(baseUrl + `/user/${data}`);
+};
+
+// 계정 삭제
+const deleteAccount = async function(data, callback, errorCallback) {
+  const response = await axios({
+    method: "DELETE",
+    url: baseUrl + `/user/${data}`,
+    headers: store.state.headers,
+  });
+  return response.data;
 };
 
 // 비밀번호 수정
@@ -92,6 +103,8 @@ const UserApi = {
     requestUserReview(data, callback, errorCallback),
   requestFavorite: (data, callback, errorCallback) =>
     requestFavorite(data, callback, errorCallback),
+  deleteAccount: (data, callback, errorCallback) =>
+    deleteAccount(data, callback, errorCallback),
 };
 
 export default UserApi;

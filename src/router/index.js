@@ -58,6 +58,10 @@ const routes = [
     name: "Rating",
     component: Rating,
   },
+  {
+    path: "*",
+    redirect: "/404",
+  },
 ];
 
 const router = new VueRouter({

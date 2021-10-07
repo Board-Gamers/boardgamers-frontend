@@ -1,7 +1,11 @@
 <template>
   <div class="py-4 navigation">
     <div class="logo">
-      <div class="logo-btn fs-1 text-black btn fw-bold" v-on:click="goMain"><i class="fas fa-dice"></i> Boardgamers</div>
+      <div class="logo-btn fs-1 text-black btn fw-bold d-flex align-items-center" v-on:click="goMain">
+        <!-- <i class="fas fa-dice"></i> -->
+        <img src="@/assets/images/dice.png" alt="dice" class="dice">
+        <span>Boardgamers</span>
+      </div>
       <div class="hamburger btn" @click="openTab"><i class="fas fa-bars"></i></div>
     </div>
     <div class="tab">
@@ -86,6 +90,10 @@ export default {
   font-size: 2rem;
 }
 
+.dice {
+  width: 50px;
+  margin-right: 14px;
+}
 @media screen and (max-width: 767px) {
   .navigation {
     flex-direction: column;
@@ -109,6 +117,11 @@ export default {
 @media screen and (max-width: 575px) {
   .tab > div {
     font-size: 14px;
+  }
+
+  .dice {
+    width: 40px;
+    margin-right: 8px;
   }
 }
 </style>

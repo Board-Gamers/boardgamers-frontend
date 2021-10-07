@@ -3,11 +3,13 @@
     <div class="bg">
       <img :src="mainBanner.image" alt="banner-img" class="bg-img">
     </div>  
-    <h1 v-if="mainBanner.nameKor" class="fw-bold my-0">{{ mainBanner.nameKor }}</h1>
-    <h1 v-else class="fw-bold my-0">{{ mainBanner.name }}</h1>
+    <h2 v-if="mainBanner.nameKor" class="fw-bold my-0">{{ mainBanner.nameKor }}</h2>
+    <h2 v-else class="fw-bold my-0">{{ mainBanner.name }}</h2>
     <div>
-      <h6 v-if="mainBanner.category.length > 2">장르 : {{ mainBanner.category | categoryTruncate }}</h6>
-      <h6>평점 : <Rating :value="mainBanner.averageRate" color="#fff"/> {{ mainBanner.averageRate | rateTruncate }}점</h6>
+      <h6><Rating :value="mainBanner.averageRate" color="#fff"/> {{ mainBanner.averageRate | rateTruncate }}점</h6>
+      <div v-if="categoryChips[0]" class="chips">
+        <span v-for="(chip, idx) in categoryChips" :key="idx" class="chip">{{ chip.trim() }}</span>
+      </div>
     </div>
     <div class="banner-info">
       <div>
@@ -52,6 +54,13 @@ export default {
   computed: {
     mainBanner: function () {
       return this.games[this.index]
+    },
+    categoryChips: function () {
+      let x = this.mainBanner.category
+      x = x.replaceAll("'","")
+      x = x.slice(1, x.length-1)
+      x = x.split(',')
+      return x.slice(0, 5)
     }
   },
   filters: {
@@ -77,16 +86,15 @@ h5, p {
 
 .main-banner {
   width: 100%;
-  min-height: 300px;
-  padding: 3% 10% 2%;
+  padding: 2% 10%;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   color: white;
-  gap: 1.5rem;
   font-size: 14px;
+  gap: 25px;
   overflow: hidden;
 }
 
@@ -113,24 +121,39 @@ h5, p {
 .banner-info {
   width: 60%;
   min-width: 260px;
+  max-width: 400px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
 
 .banner-info img {
-  max-width: 30px;
+  max-width: 25px;
   width: 7vw;
-  margin-bottom: 0.5em;
+  margin-bottom: 3px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+  justify-content: center;
+}
+
+.chip {
+  border: 1px solid #fff;
+  border-radius: 50rem;
+  padding: 1px 5px;
+  text-align: center;
+  font-size: 12px;
 }
 
 @media screen and (max-width: 575px){
   .main-banner {
     font-size: 12px;
-    min-height: 200px;
   }
 
-  h1 {
+  h2 {
     font-size: 20px;
   }
 

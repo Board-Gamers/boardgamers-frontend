@@ -7,7 +7,7 @@
         <h2>고객센터</h2>
         <p>자유롭게 질문을 올릴 수 있습니다.<br />적절하지 않은 게시글은 관리자에 의해 삭제 조치될 수 있습니다.</p>
       </div>
-      <button class="btn btn-primary write-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >글 쓰기</button>
+      <button v-if="$store.state.headers.Authorization" class="btn btn-primary write-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >글 쓰기</button>
     </div>
 
     <UploadBoard @upload-board="uploadBoard"/>
