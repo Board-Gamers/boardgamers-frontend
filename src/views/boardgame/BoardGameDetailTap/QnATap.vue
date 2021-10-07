@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="border-c8 mb-2 p-2" v-if="isSpread">{{ ele.content }}</div>
-            <div class="fc-80 fw-light mb-2">{{ ele.writerId }} {{ getReviewDate(ele.addDate) }}</div>
+            <div class="fc-80 fw-light mb-2">{{ ele.writerId }} {{ getReviewDate(ele.addDate) }} <span v-if="ismine(ele.writerId)" v-on:click="delQna(ele.id)">삭제</span></div>
         </div>
 
         <!-- 답변 작성 -->
@@ -27,11 +27,25 @@
         </div> -->
 
         <!-- 답변 -->
-        <div class="col-sm-1" v-if="isSpread && isRepled"></div>
-        <div class="col-sm-1" v-if="isSpread && isRepled"><div class="p-1 bg-db fs-5">A</div></div>
-        <div class="col-sm-10 text-start" v-if="isSpread && isRepled">
-            <div class="border-db mb-2 p-2">{{ reply.content }}</div>
-            <div class="fc-80 fw-light mb-2">{{ reply.writerId }} {{ getReviewDate(reply.addDate) }}</div>
+        <div class="row" v-if="isSpread">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-1"><div class="p-1 bg-db fs-5">A</div></div>
+            <div class="col-sm-10 text-start">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="댓글 달기" aria-label="Recipient's username" aria-describedby="button-addon2" v-on:input="updateReply" />
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="writeReply(ele.id)">작성</button>
+                </div>
+            </div>
+        </div>
+        <div v-if="isSpread && isRepled">
+            <div class="row" v-for="re in reply" v-bind:key="re.id">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-1"><div class="p-1 bg-db fs-5">A</div></div>
+                <div class="col-sm-10 text-start">
+                    <div class="border-db mb-2 p-2">{{ re.content }}</div>
+                    <div class="fc-80 fw-light mb-2">{{ re.writerId }} {{ getReviewDate(re.addDate) }}</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -77,20 +91,32 @@ export default {
         },
         getReply(id) {
             BoardgameApi.requestGameQuestionReply(id).then((res) => {
-                this.reply = res.data.data[0];
+                this.reply = res.data.data;
             });
         },
-        // updateReply(e) {
-        //     this.myrepl = e.target.value;
-        // },
-        // writeReply(id) {
-        //     let data = {
-        //         content: this.myrepl,
-        //         gameId: id,
-        //         title: "string",
-        //     };
-        //     BoardgameApi.requestGameQuestionWriteReply(id, () => {});
-        // },
+        updateReply(e) {
+            this.myrepl = e.target.value;
+        },
+        writeReply(id) {
+            let data = {
+                content: { content: this.myrepl },
+                gameId: id,
+            };
+            if (!data.content.content) return;
+            BoardgameApi.requestGameQuestionWriteReply(data, () => {
+                swal("답변을 작성했습니다");
+                this.$router.go();
+            });
+        },
+        delQna(id) {
+            BoardgameApi.requestDeleteQna(id).then(() => {
+                swal("리뷰를 삭제했습니다.");
+                this.$router.go();
+            });
+        },
+        ismine(nick) {
+            return nick === localStorage.getItem("nickname");
+        },
     },
 };
 </script>

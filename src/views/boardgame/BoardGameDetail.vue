@@ -171,8 +171,9 @@ export default {
                 gameId: this.$route.params.id,
                 title: this.question,
             };
+            if (!data.content) return;
             BoardgameApi.requestGameWriteQuestion(data, () => {
-                alert("질문을 작성했습니다");
+                swal("질문을 작성했습니다");
                 this.$router.go();
             });
         },
