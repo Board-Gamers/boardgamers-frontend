@@ -16,7 +16,7 @@
         <input type="number" id="age" max="99" min="1" maxlength="2" @input="maxLengthCheck" v-model="credentials.age">
       </div>
     </form>
-    <button class="btn btn-success" style="width: 130px;" :disabled="!credentials.nickname || isChange" @click="updateInfo">Update info</button>
+    <button class="btn btn-success" style="width: 130px;" :disabled="!credentials.nickname" @click="updateInfo">Update info</button>
   </div>
 </template>
 
@@ -54,12 +54,6 @@ export default {
       localStorage.setItem('nickname', this.credentials.nickname)
       this.$router.push({ name: "Profile", params: { nickname: this.credentials.nickname }})
     },
-  },
-  computed: {
-    isChange: function () {
-      const nickname = localStorage.getItem('nickname')
-      return nickname === this.credentials.nickname ? true : false
-    }
   },
   created: async function () {
     const nickname = localStorage.getItem('nickname')

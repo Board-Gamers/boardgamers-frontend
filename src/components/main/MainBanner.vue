@@ -87,6 +87,7 @@ h5, p {
 .main-banner {
   width: 100%;
   padding: 2% 10%;
+  height: 275px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -151,6 +152,7 @@ h5, p {
 @media screen and (max-width: 575px){
   .main-banner {
     font-size: 12px;
+    height: 240px;
   }
 
   h2 {
