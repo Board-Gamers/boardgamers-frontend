@@ -76,7 +76,7 @@
                         <div class="tab-content" id="nav-tabContent">
                             <!-- detail -->
                             <div class="tab-pane fade show active p-4 bc" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <InfoTap :info="info" :videoId="videoid" />
+                                <InfoTap v-if="info" :info="info" :videoId="videoid" />
                             </div>
                             <!-- Review -->
                             <div class="tab-pane fade p-4 bc" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">

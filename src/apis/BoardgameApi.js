@@ -94,6 +94,17 @@ const requestGameBookmark = (data, callback, errorCallback) => {
         });
 };
 
+// 게임 답변 좋아요
+const likeAnswer = (data, callback, errorCallback) => {
+    return axios({
+        method: "POST",
+        url: baseUrl + "/game/qna/like",
+        headers: store.state.headers,
+        params: { answerId: data },
+        data: { isLiked: true },
+    });
+};
+
 const BoardgameApi = {
     requestGameInfo: (data, callback, errorCallback) => requestGameInfo(data, callback, errorCallback),
     requestGameSearch: (data, callback, errorCallback) => requestGameSearch(data, callback, errorCallback),
@@ -106,6 +117,7 @@ const BoardgameApi = {
     requestGameWriteQuestion: (data, callback, errorCallback) => requestGameWriteQuestion(data, callback, errorCallback),
     requestGameQuestionWriteReply: (data, callback, errorCallback) => requestGameQuestionWriteReply(data, callback, errorCallback),
     requestGameBookmark: (data, callback, errorCallback) => requestGameBookmark(data, callback, errorCallback),
+    likeAnswer: (data, callback, errorCallback) => likeAnswer(data, callback, errorCallback),
 };
 
 export default BoardgameApi;
