@@ -78,6 +78,16 @@ const requestUserReview = async function(data, callback, errorCallback) {
   return response.data.data;
 };
 
+// 달성한 목표 받아오기
+const requestAchievement = async function(data, callback, errorCallback) {
+  const response = await axios({
+    method: "GET",
+    url: baseUrl + `/user/${data}`,
+    params: { type: "achievement" },
+  });
+  return response.data.data;
+};
+
 // 즐겨찾기 게임 받아오기
 const requestFavorite = async function(data, callback, errorCallback) {
   const response = await axios({
@@ -103,6 +113,8 @@ const UserApi = {
     requestUserReview(data, callback, errorCallback),
   requestFavorite: (data, callback, errorCallback) =>
     requestFavorite(data, callback, errorCallback),
+  requestAchievement: (data, callback, errorCallback) =>
+    requestAchievement(data, callback, errorCallback),
   deleteAccount: (data, callback, errorCallback) =>
     deleteAccount(data, callback, errorCallback),
 };
