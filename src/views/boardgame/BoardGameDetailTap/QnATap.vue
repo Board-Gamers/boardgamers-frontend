@@ -63,17 +63,20 @@
     <div v-if="isSpread && isRepled">
       <div class="row" v-for="re in reply" v-bind:key="re.id">
         <div class="col-sm-1"></div>
-        <div class="col-sm-1"><div class="p-1 bg-db fs-5 dp-none">A</div></div>
+        <div class="col-sm-1"><div class="p-1 bg-db fs-5 dp-none">A</div><div class="mt-2">{{ re.likes }}</div></div>
         <div class="col-sm-10 text-start">
           <div class="border-db mb-2 p-2">{{ re.content }}</div>
           <div class="fc-80 fw-light mb-2 d-flex justify-content-between">
             <span>{{ re.writerId }} {{ getReviewDate(re.addDate) }}</span>
             <div>
-              <span @click="likeAnswer(re.id, re.questionId)" style="cursor: pointer;">
-                <i v-if="!re.isLiked" class="far fa-heart"></i>
-                <i v-else class="fas fa-heart"></i>
+              <span @click="likeAnswer(re.id, re.questionId, true)" style="cursor: pointer; margin-right: 10px;">
+                <i v-if="re.isLiked === true" class="fas fa-thumbs-up"></i>
+                <i v-else class="far fa-thumbs-up"></i>
               </span>
-              <span class="ms-2">{{ re.likes }}</span>
+              <span @click="likeAnswer(re.id, re.questionId, false)" style="cursor: pointer;">
+                <i v-if="re.isLiked === false && re.isLiked !== null" class="fas fa-thumbs-down"></i>
+                <i v-else class="far fa-thumbs-down"></i>
+              </span>
             </div>
           </div>
         </div>
@@ -151,8 +154,9 @@ export default {
     ismine(nick) {
       return nick === localStorage.getItem("nickname");
     },
-    likeAnswer(id, questionId) {
-      BoardgameApi.likeAnswer(id)
+    likeAnswer(id, questionId, likes) {
+      const data = { id, likes }
+      BoardgameApi.likeAnswer(data)
       .then(() => {
           this.getReply(questionId)
       });
