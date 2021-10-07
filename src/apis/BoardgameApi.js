@@ -76,6 +76,18 @@ const requestGameQuestionWriteReply = (data, callback, errorCallback) => {
         });
 };
 
+// 보드게임 질문 답변 작성하기
+const requestGameBookmark = (data, callback, errorCallback) => {
+    axios
+        .post(baseUrl + `/game/favorite?gameId=${data}`)
+        .then((res) => {
+            callback();
+        })
+        .catch((e) => {
+            //window.swal(e.response.data.message + "!");
+        });
+};
+
 const BoardgameApi = {
     requestGameInfo: (data, callback, errorCallback) => requestGameInfo(data, callback, errorCallback),
     requestGameSearch: (data, callback, errorCallback) => requestGameSearch(data, callback, errorCallback),
@@ -87,6 +99,7 @@ const BoardgameApi = {
     requestGameQuestionReply: (data, callback, errorCallback) => requestGameQuestionReply(data, callback, errorCallback),
     requestGameWriteQuestion: (data, callback, errorCallback) => requestGameWriteQuestion(data, callback, errorCallback),
     requestGameQuestionWriteReply: (data, callback, errorCallback) => requestGameQuestionWriteReply(data, callback, errorCallback),
+    requestGameBookmark: (data, callback, errorCallback) => requestGameBookmark(data, callback, errorCallback),
 };
 
 export default BoardgameApi;

@@ -102,8 +102,9 @@ export default {
             };
 
             BoardgameApi.requestWriteReview(data, () => {
-                swal("리뷰를 작성했습니다");
-                this.$router.go();
+                swal("리뷰를 작성했습니다").then(() => {
+                    this.$router.go();
+                });
             });
         },
         updateComment(e) {
@@ -115,8 +116,9 @@ export default {
         },
         delReview(id) {
             BoardgameApi.requestDeleteReview(id).then(() => {
-                swal("리뷰를 삭제했습니다.");
-                this.$router.go();
+                swal("리뷰를 삭제했습니다.").then(() => {
+                    this.$router.go();
+                });
             });
         },
     },

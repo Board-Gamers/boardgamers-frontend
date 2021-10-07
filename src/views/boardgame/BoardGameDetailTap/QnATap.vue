@@ -1,7 +1,7 @@
 <template>
     <div class="row py-2">
         <!-- 질문 -->
-        <div class="col-sm-1"><div class="p-1 bg-c8 fs-5">Q</div></div>
+        <div class="col-sm-1"><div class="p-1 bg-c8 fs-5 dp-none">Q</div></div>
         <div class="col-sm-11 text-start">
             <div class="border-c8 mb-2 p-2 d-flex justify-content-between pe-4">
                 <div>{{ ele.title }}</div>
@@ -12,7 +12,7 @@
                     <span><i class="fas fa-caret-up"></i></span>
                 </div>
             </div>
-            <div class="border-c8 mb-2 p-2" v-if="isSpread">{{ ele.content }}</div>
+            <!-- <div class="border-c8 mb-2 p-2" v-if="isSpread">{{ ele.content }}</div> -->
             <div class="fc-80 fw-light mb-2">{{ ele.writerId }} {{ getReviewDate(ele.addDate) }} <span v-if="ismine(ele.writerId)" v-on:click="delQna(ele.id)">삭제</span></div>
         </div>
 
@@ -29,7 +29,7 @@
         <!-- 답변 -->
         <div class="row" v-if="isSpread">
             <div class="col-sm-1"></div>
-            <div class="col-sm-1"><div class="p-1 bg-db fs-5">A</div></div>
+            <div class="col-sm-1"><div class="p-1 bg-db fs-5 dp-none">A</div></div>
             <div class="col-sm-10 text-start">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="댓글 달기" aria-label="Recipient's username" aria-describedby="button-addon2" v-on:input="updateReply" />
@@ -40,7 +40,7 @@
         <div v-if="isSpread && isRepled">
             <div class="row" v-for="re in reply" v-bind:key="re.id">
                 <div class="col-sm-1"></div>
-                <div class="col-sm-1"><div class="p-1 bg-db fs-5">A</div></div>
+                <div class="col-sm-1"><div class="p-1 bg-db fs-5 dp-none">A</div></div>
                 <div class="col-sm-10 text-start">
                     <div class="border-db mb-2 p-2">{{ re.content }}</div>
                     <div class="fc-80 fw-light mb-2">{{ re.writerId }} {{ getReviewDate(re.addDate) }}</div>
@@ -104,14 +104,16 @@ export default {
             };
             if (!data.content.content) return;
             BoardgameApi.requestGameQuestionWriteReply(data, () => {
-                swal("답변을 작성했습니다");
-                this.$router.go();
+                swal("답변을 작성했습니다").then(() => {
+                    this.$router.go();
+                });
             });
         },
         delQna(id) {
             BoardgameApi.requestDeleteQna(id).then(() => {
-                swal("리뷰를 삭제했습니다.");
-                this.$router.go();
+                swal("리뷰를 삭제했습니다.").then(() => {
+                    this.$router.go();
+                });
             });
         },
         ismine(nick) {
@@ -131,5 +133,10 @@ export default {
     background-color: #dbe8d8;
     border-radius: 50%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+@media screen and (max-width: 700px) {
+    .dp-none {
+        display: none;
+    }
 }
 </style>

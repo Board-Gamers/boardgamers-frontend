@@ -7,15 +7,15 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-2">
-                    <!-- <Tap /> -->
-                </div>
-                <div class="col-sm-10">
+                <!-- <div class="col-sm-2">
+                    <Tap />
+                </div> -->
+                <div class="col-sm-12">
                     <div class="row mb-5">
-                        <div class="col-md-5">
-                            <img class="w-100" :src="info.image" alt="" style="height:220px;" />
+                        <div class="col-md-4">
+                            <img class="w-100" :src="info.image" alt="" style="height:230px;" />
                         </div>
-                        <div class="col-md-7 text-start py-1">
+                        <div class="col-md-8 text-start py-1">
                             <div class=" fs-3 fw-500 mb-1">
                                 <span v-if="info.nameKor">{{ info.nameKor }}</span
                                 ><span v-else>{{ info.name }}</span
@@ -26,6 +26,7 @@
                             <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 시간&nbsp;&nbsp;</span>{{ info.minPlayTime }}분</div>
                             <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 연령&nbsp;&nbsp;</span>{{ info.minAge }}세 이상</div>
                             <div class=" fs-5 fw-500 pt-1"><span class="fc-80">게임 순위&nbsp;&nbsp;</span>{{ info.rank }}위</div>
+                            <button class="btn btn-primary mt-1" v-on:click="addBookmark">즐겨찾기</button>
                         </div>
                     </div>
                     <div class="row">
@@ -84,7 +85,7 @@
                             <div class="tab-pane fade p-4 bc" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                                 <!-- 질문 작성 -->
                                 <div class="row">
-                                    <div class="col-sm-1"><div class="p-1 bg-c8 fs-5">Q</div></div>
+                                    <div class="col-sm-1"><div class="p-1 bg-c8 fs-5 dp-none">Q</div></div>
                                     <div class="col-sm-11 text-start">
                                         <div class="input-group mb-4">
                                             <input
@@ -140,9 +141,9 @@ export default {
         BoardgameApi.requestGameInfo(id).then((res) => {
             this.info = res.data.data;
             let name = this.info.nameKor ? this.info.nameKor : this.info.name;
-            YoutubeApi.requestYoutube(name).then((res) => {
-                this.videoid = "https://www.youtube.com/embed/" + res.data.items[0].id.videoId;
-            });
+            // YoutubeApi.requestYoutube(name).then((res) => {
+            //     this.videoid = "https://www.youtube.com/embed/" + res.data.items[0].id.videoId;
+            // });
         });
 
         // console.log(this.$store.getters.getBoardgameinfo);
@@ -167,14 +168,21 @@ export default {
         },
         writeQuestion() {
             let data = {
-                content: this.question,
+                // content: this.question,
                 gameId: this.$route.params.id,
                 title: this.question,
             };
-            if (!data.content) return;
+            if (!data.title) return;
             BoardgameApi.requestGameWriteQuestion(data, () => {
-                swal("질문을 작성했습니다");
-                this.$router.go();
+                swal("질문을 작성했습니다").then(() => {
+                    this.$router.go();
+                });
+            });
+        },
+        addBookmark() {
+            let id = this.$route.params.id;
+            BoardgameApi.requestGameBookmark(id, () => {
+                swal("즐겨찾기에 추가했습니다.");
             });
         },
     },
@@ -190,4 +198,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media screen and (max-width: 700px) {
+    .dp-none {
+        display: none;
+    }
+}
+</style>
