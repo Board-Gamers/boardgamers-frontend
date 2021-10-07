@@ -97,7 +97,11 @@ export default {
   mounted: async function () {
     const token = localStorage.getItem('jwt')
     this.isLogin = Boolean(token)
-    Promise.all([this.updateRankRec(), this.updateReviewRec(), this.updateRateRec(), this.updateUserRec()])
+    if (this.isLogin) {
+      await Promise.all([this.updateRankRec(), this.updateReviewRec(), this.updateRateRec(), this.updateUserRec()])
+    } else {
+      await Promise.all([this.updateRankRec(), this.updateReviewRec(), this.updateRateRec()])
+    }
   }
 }
 </script>

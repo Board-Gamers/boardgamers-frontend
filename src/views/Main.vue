@@ -101,14 +101,24 @@ export default {
   },
   mounted: async function () {
     const token = localStorage.getItem('jwt')
-    this.isLogin = token ? true : false
-    const response = await Promise.all([this.getRankRec(), this.getReviewRec(), this.getRateRec(), this.getUserRec()])
-    this.$store.state.recommend = { 
-      ...this.$store.state.recommend, 
-      rank: response[0], 
-      review: response[1],
-      rate: response[2],
-      userBase: response[3]
+    this.isLogin = Boolean(token)
+    if (this.isLogin) {
+      const response = await Promise.all([this.getRankRec(), this.getReviewRec(), this.getRateRec(), this.getUserRec()])
+      this.$store.state.recommend = { 
+        ...this.$store.state.recommend, 
+        rank: response[0], 
+        review: response[1],
+        rate: response[2],
+        userBase: response[3]
+      }
+    } else {
+      const response = await Promise.all([this.getRankRec(), this.getReviewRec(), this.getRateRec()])
+      this.$store.state.recommend = {
+        ...this.$store.state.recommend, 
+        rank: response[0], 
+        review: response[1],
+        rate: response[2],
+      }
     }
   }
 }
