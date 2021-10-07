@@ -89,6 +89,7 @@ export default {
                 this.totalPage = res.data.data.totalPage;
                 this.nowPage = res.data.data.nowPage;
                 this.nowPageSize = res.data.data.nowPageSize;
+                this.pages = [1, 2, 3, 4, 5].map((x) => x + 5 * Math.floor(this.nowPage / 5));
             });
         },
         goDetail(id) {

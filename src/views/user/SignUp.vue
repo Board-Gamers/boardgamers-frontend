@@ -6,7 +6,7 @@
             <div class="login-box col-md-5 mx-auto px-4 mt-5">
                 <div class="login-txt text-white fs-2 py-4">회원가입</div>
                 <div class="email-box">
-                    <Input placeholder="example@exam.ple" type="email" label="이메일" @setInput="setEmail" @keyUp="signUp" />
+                    <Input placeholder="example@exam.ple" type="email" label="아이디" @setInput="setEmail" @keyUp="signUp" />
                 </div>
                 <!-- <div class="certi-box">
                     <Input placeholder="인증번호" type="text" label="인증번호" @setInput="setCert" @keyUp="signUp" />

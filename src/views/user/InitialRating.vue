@@ -460,7 +460,7 @@ export default {
                 if (!this.myrate[i]) continue;
 
                 let data = {
-                    comment: "제가 생각한 별점입니다",
+                    comment: "회원가입 후 첫 평가입니다.",
                     gameId: this.elements2[i],
                     rating: this.myrate[i],
                 };

@@ -6,7 +6,7 @@
             <div class="login-box col-md-5 mx-auto px-4 mt-5">
                 <div class="login-txt text-white fs-2 py-4">로그인</div>
                 <div class="email-box">
-                    <Input placeholder="example@exam.ple" type="email" label="이메일" @setInput="setEmail" @keyUp="login" />
+                    <Input placeholder="example@exam.ple" type="email" label="아이디" @setInput="setEmail" @keyUp="login" />
                 </div>
                 <div class="password-box">
                     <Input placeholder="Password" type="password" label="비밀번호" @setInput="setPassword" @keyUp="login" />
