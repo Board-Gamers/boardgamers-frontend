@@ -56,9 +56,7 @@ const requestGameQuestion = (id, callback, errorCallback) => {
 };
 // 보드게임 질문 답변 가져오기
 const requestGameQuestionReply = (id, callback, errorCallback) => {
-  return axios.get(baseUrl + `/game/qna?questionId=${id}`, {
-    headers: { Authorization: localStorage.getItem("jwt") },
-  });
+  return axios.get(baseUrl + `/game/qna?questionId=${id}`);
 };
 
 // 보드게임 질문 작성하기
