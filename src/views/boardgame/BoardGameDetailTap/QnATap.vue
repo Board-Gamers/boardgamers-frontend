@@ -152,16 +152,22 @@ export default {
             return nick === localStorage.getItem("nickname");
         },
         likeAnswer(id, questionId, likes) {
+            const token = localStorage.getItem('jwt')
             const data = { id, likes };
-            BoardgameApi.likeAnswer(data).then(() => {
-                this.getReply(questionId);
-            })
-            .catch(() => {
+            if (token) {
+                BoardgameApi.likeAnswer(data).then(() => {
+                    this.getReply(questionId);
+                })
+                .catch(err => {
+                    swal('요청 오류', 'error')
+                })
+            } else {
                 swal({
                     icon: 'error',
                     title: '로그인을 해주세요.'
                 })
-            })
+
+            }
         },
     },
 };

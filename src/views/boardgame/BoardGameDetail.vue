@@ -182,35 +182,43 @@ export default {
             });
         },
         addBookmark(num) {
+            const token = localStorage.getItem('jwt')
             let id = this.$route.params.id;
-            if (num == 1) {
-                BoardgameApi.requestGameBookmark(id, () => {
-                    swal("즐겨찾기에 추가합니다.");
-                })
-                .then(() => {
-                    this.isBooked = !this.isBooked;
-                })
-                .catch(err => {
-                    swal({
-                        icon: 'error',
-                        title: '로그인을 해주세요.'
+            if (token) {
+                if (num == 1) {
+                    BoardgameApi.requestGameBookmark(id, () => {
+                        swal("즐겨찾기에 추가합니다.");
                     })
-                });
-            }
-            if (num == 2) {
-                BoardgameApi.requestGameBookmark(id, () => {
-                    swal("즐겨찾기를 해제합니다.");
-                })
-                .then(() => {
-                    this.isBooked = !this.isBooked;
-                })
-                .catch(err => {
-                    swal({
-                        icon: 'error',
-                        title: '로그인을 해주세요.'
+                    .then(() => {
+                        this.isBooked = !this.isBooked;
                     })
+                    .catch(err => {
+                        swal({
+                            icon: 'error',
+                            title: '요청 오류'
+                        })
+                    });
+                }
+                if (num == 2) {
+                    BoardgameApi.requestGameBookmark(id, () => {
+                        swal("즐겨찾기를 해제합니다.");
+                    })
+                    .then(() => {
+                        this.isBooked = !this.isBooked;
+                    })
+                    .catch(err => {
+                        swal({
+                            icon: 'error',
+                            title: '요청 오류'
+                        })
+                    })
+                    
+                }
+            } else {
+                swal({
+                    icon: 'error',
+                    title: '로그인을 해주세요.'
                 })
-                
             }
         },
     },
