@@ -96,12 +96,12 @@ const requestGameQuestionWriteReply = (data, callback, errorCallback) => {
 
 // 보드게임 즐겨찾기하기
 const requestGameBookmark = (data, callback, errorCallback) => {
-  axios({
+  return axios({
     method: "POST",
     url: baseUrl + `/game/favorite?gameId=${data}`,
     headers: store.state.headers,
   }).then((res) => {
-    callback();
+    return callback();
   });
   // axios
   //     .post(, {

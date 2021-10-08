@@ -155,7 +155,13 @@ export default {
             const data = { id, likes };
             BoardgameApi.likeAnswer(data).then(() => {
                 this.getReply(questionId);
-            });
+            })
+            .catch(() => {
+                swal({
+                    icon: 'error',
+                    title: '로그인을 해주세요.'
+                })
+            })
         },
     },
 };
